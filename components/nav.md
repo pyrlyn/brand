@@ -4,7 +4,6 @@
 
 | Part | Token |
 |---|---|
-| sidebar width | `size-sidebar` 200px; icon rail `size-sidebar-rail` 56px |
 | item | height `size-row` 36px, padding x 10px, gap `space-3`, radius `radius-md`, `text-xs` |
 | icon | 16px, `currentColor` |
 
@@ -15,5 +14,5 @@
 | current (`aria-current="page"`) | bg `accent-muted`, text + icon `accent-fg` |
 | focus-visible | `--rtok-ring` |
 
-Background changes animate over `duration-base` (150ms, Slint), color over `duration-fast`.
-Source: web/src/input.css:81-82; kit.slint:150-196 (NavItem); theme.slint:41-42.
+Background changes animate over `duration-base` (180ms), color over `duration-fast` (120ms).
+Source: web/src/input.css:81-82.

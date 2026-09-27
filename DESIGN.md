@@ -1,6 +1,6 @@
 # rtok design guidelines (Bitset B · Hex Diff)
 
-One brand across every rtok surface: the Slint desktop/web UI, the web admin, the rtok docs
+One brand across every rtok surface: the web admin, the rtok docs
 site (listepo.github.io/rtok) and the rtok page on the listepo project site. Token values live
 in `tokens/tokens.json`; this file is the "how to use them" part. Origin: the v3-B brand pack
 (`sources/rtok-brand-v3-B-tokens/DESIGN.md`, `webui-mock/themes/TOKENS.md`), updated to the
@@ -44,8 +44,8 @@ thinned, coral cells are measured cuts (Δ). The wordmark is tracked `RTOK` plus
 
 ## Motion
 
-- `fast` 120ms for hover color/border, `base` 150ms for selection backgrounds, `slow` 180ms for
-  knobs and larger state changes. `standard` easing for UI; `emphasized` for entrances.
+- `fast` 120ms for hover color/border, `base` 180ms for selection backgrounds, knobs and larger
+  state changes. `standard` easing for UI; `emphasized` for entrances.
 - Honor `prefers-reduced-motion: reduce`: `dist/tokens.css` collapses every duration to 0.01ms
   and `dist/components.css` stops animations. Motion never carries information alone.
 
@@ -68,7 +68,7 @@ thinned, coral cells are measured cuts (Δ). The wordmark is tracked `RTOK` plus
 
 ## Icons
 
-- `icons/ui/`: 24×24, stroke 1.75, round caps, `currentColor` (Slint UI and web admin nav).
+- `icons/ui/`: 24×24, stroke 1.75, round caps, `currentColor` (web admin nav).
 - `icons/feature/`: "Signal / scope" feature icons for marketing pages, with `@2x` PNGs; coral
   appears only where the drawing already marks a Δ.
 - Icons inherit text color: `fg-muted` by default, `accent` (dark) / `accent-fg` (light) when active.

@@ -11,9 +11,8 @@
 | State | Style |
 |---|---|
 | hover row | bg `surface-2` at 70%, `duration-fast` |
-| selected (`aria-selected="true"`) | bg `accent-muted` |
+| selected (`aria-selected="true"`) | bg `accent` at 10% |
 | focus (row link) | `--rtok-ring` |
 | empty / loading | `.rtok-skeleton` blocks (`surface-3`, pulse; static under reduced motion) |
 
-Slint `ListRow`: 36px, radius-md, hover `surface-2`, selected `accent-muted`, `animate background 150ms`
-(kit.slint:197-221). Source: web/src/input.css:90-95.
+Source: web/src/input.css:90-95.

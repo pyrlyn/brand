@@ -32,7 +32,6 @@ const hexToRgb = (hex) => {
 const hasAlpha = (hex) => hex.replace("#", "").length === 8;
 const rgbChannels = (hex) => hexToRgb(hex).join(" ");
 const bezier = (a) => `cubic-bezier(${a.join(", ")})`;
-const remPx = (v) => (v.endsWith("rem") ? `${parseFloat(v) * 16}px` : v);
 const lineHeight = (t) => t.$extensions?.["com.listepo.lineHeight"];
 const family = (arr) => arr.map((f) => (/\s/.test(f) ? `"${f}"` : f)).join(", ");
 
@@ -121,54 +120,9 @@ const fontsCss = `/* IBM Plex Mono (SIL OFL 1.1, see fonts/OFL.txt). ${HEADER}
 ${Object.entries(fontFiles)
   .map(
     ([w, f]) =>
-      `@font-face {\n  font-family: "IBM Plex Mono";\n  font-style: normal;\n  font-weight: ${T.font.weight[w].$value};\n  font-display: swap;\n  src: url("../fonts/IBMPlexMono-${f}.woff2") format("woff2"),\n       url("../fonts/IBMPlexMono-${f}.ttf") format("truetype");\n}`
+      `@font-face {\n  font-family: "IBM Plex Mono";\n  font-style: normal;\n  font-weight: ${T.font.weight[w].$value};\n  font-display: swap;\n  src: url("../fonts/IBMPlexMono-${f}.woff2") format("woff2");\n}`
   )
   .join("\n")}
-`;
-
-// ---------- tailwind v3 preset ----------
-const semanticNames = Object.keys(themeColors.dark);
-const twColor = (k) => (hasAlpha(themeColors.dark[k]) ? `var(--rtok-${k})` : `rgb(var(--rtok-${k}-rgb) / <alpha-value>)`);
-const twColors = {
-  bg: twColor("bg"),
-  surface: { DEFAULT: twColor("surface"), 2: twColor("surface-2"), 3: twColor("surface-3") },
-  border: { DEFAULT: twColor("border"), strong: twColor("border-strong") },
-  fg: { DEFAULT: twColor("fg"), muted: twColor("fg-muted"), subtle: twColor("fg-subtle") },
-  accent: { DEFAULT: twColor("accent"), fg: twColor("accent-fg"), muted: twColor("accent-muted"), on: twColor("on-accent") },
-  delta: { DEFAULT: twColor("delta"), fg: twColor("delta-fg") },
-  danger: { DEFAULT: twColor("danger"), fg: twColor("danger-fg") },
-  success: { DEFAULT: twColor("success"), fg: twColor("success-fg") },
-  warn: { DEFAULT: twColor("warn"), fg: twColor("warn-fg") },
-  focus: twColor("focus"),
-  mark: twColor("mark-tile"),
-  brand: Object.fromEntries(tokens(T.brand).map(([k, t]) => [k, t.$value])),
-};
-const covered = new Set(["bg","surface","surface-2","surface-3","border","border-strong","fg","fg-muted","fg-subtle","accent","accent-fg","accent-muted","on-accent","delta","delta-fg","danger","danger-fg","success","success-fg","warn","warn-fg","focus","mark-tile","shine","selection"]);
-for (const k of semanticNames) if (!covered.has(k)) throw new Error(`theme token ${k} not mapped in tailwind preset`);
-const preset = {
-  darkMode: ["variant", '&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *)'],
-  theme: {
-    // Full override (not extend) so xs sorts before sm in the generated media queries.
-    screens: Object.fromEntries(tokens(T.breakpoint).map(([k, t]) => [k, t.$value])),
-    extend: {
-      colors: twColors,
-      fontFamily: { mono: T.font.family.mono.$value.map((f) => (/\s/.test(f) ? `"${f}"` : f)) },
-      fontSize: Object.fromEntries(tokens(T.font.size).map(([k, t]) => [k, [t.$value, { lineHeight: lineHeight(t) }]])),
-      fontWeight: Object.fromEntries(tokens(T.font.weight).map(([k, t]) => [k, String(t.$value)])),
-      letterSpacing: Object.fromEntries(tokens(T.font.tracking).map(([k, t]) => [k, t.$value])),
-      borderRadius: Object.fromEntries(tokens(T.radius).map(([k, t]) => [k, t.$value])),
-      boxShadow: { e1: "var(--rtok-shadow-e1)", e2: "var(--rtok-shadow-e2)", e3: "var(--rtok-shadow-e3)", ring: "var(--rtok-ring)" },
-      spacing: Object.fromEntries(tokens(T.size).map(([k, t]) => [k, t.$value])),
-      transitionDuration: Object.fromEntries(tokens(T.motion.duration).map(([k]) => [k, `var(--rtok-duration-${k})`])),
-      transitionTimingFunction: Object.fromEntries(tokens(T.motion.easing).map(([k, t]) => [k, bezier(t.$value)])),
-      opacity: { disabled: String(T.opacity.disabled.$value) },
-    },
-  },
-};
-const presetJs = `/* rtok brand, Tailwind CSS v3 preset. ${HEADER}
- * Colors read CSS variables from dist/tokens.css, so load that stylesheet too.
- * Usage: module.exports = { presets: [require("@listepo/brand/tailwind-preset")], content: [...] } */
-module.exports = ${JSON.stringify(preset, null, 2)};
 `;
 
 // ---------- tailwind v4 ----------
@@ -210,35 +164,6 @@ ${v4.join("\n")}
 @utility duration-slow { transition-duration: var(--rtok-duration-slow); }
 `;
 
-// ---------- slint ----------
-const sl = [];
-for (const [k] of Object.entries(themeColors.dark)) {
-  const d = themeColors.dark[k], l = themeColors.light[k];
-  sl.push(`    out property <color> ${k}: ${d === l ? d : `dark ? ${d} : ${l}`};`);
-}
-const slStatic = [];
-for (const [k, t] of tokens(T.brand)) slStatic.push(`    out property <color> brand-${k}: ${t.$value};`);
-slStatic.push(`    out property <string> font-family: "${T.font.family.mono.$value[0]}";`);
-for (const [k, t] of tokens(T.font.weight)) slStatic.push(`    out property <int> weight-${k}: ${t.$value};`);
-for (const [k, t] of tokens(T.font.size)) slStatic.push(`    out property <length> text-${k}: ${remPx(t.$value)};`);
-for (const [k, t] of tokens(T.space)) slStatic.push(`    out property <length> space-${k}: ${t.$value};`);
-for (const [k, t] of tokens(T.radius)) slStatic.push(`    out property <length> radius-${k}: ${k === "full" ? "9999px" : t.$value};`);
-for (const [k, t] of tokens(T.size)) slStatic.push(`    out property <length> size-${k}: ${t.$value};`);
-for (const [k, t] of tokens(T.breakpoint)) slStatic.push(`    out property <length> bp-${k}: ${t.$value};`);
-for (const [k, t] of tokens(T.motion.duration)) slStatic.push(`    out property <duration> duration-${k}: ${t.$value};`);
-slStatic.push(`    out property <float> opacity-disabled: ${T.opacity.disabled.$value};`);
-const slint = `// rtok brand tokens for Slint. ${HEADER}
-// import { Tokens } from "tokens.slint";   then: background: Tokens.bg;  Tokens.dark = false;
-// Slint has no prefers-reduced-motion: set durations to 0ms yourself when the OS asks.
-export global Tokens {
-    in-out property <bool> dark: true;
-
-${sl.join("\n")}
-
-${slStatic.join("\n")}
-}
-`;
-
 // ---------- resolved json ----------
 const resolved = {
   $comment: HEADER,
@@ -262,9 +187,7 @@ const out = {
   "dist/tokens.css": tokensCss,
   "dist/fonts.css": fontsCss,
   "dist/components.css": componentsCss,
-  "dist/tailwind.preset.js": presetJs,
   "dist/tailwind-v4.css": v4Css,
-  "dist/tokens.slint": slint,
   "dist/tokens.resolved.json": JSON.stringify(resolved, null, 2) + "\n",
 };
 const check = process.argv.includes("--check");

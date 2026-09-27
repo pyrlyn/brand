@@ -12,7 +12,7 @@
     "fg-subtle": "#7F9AAE",
     "accent": "#5CE1FF",
     "accent-fg": "#5CE1FF",
-    "accent-muted": "#5CE1FF33",
+    "accent-muted": "#5CE1FF26",
     "on-accent": "#06101A",
     "delta": "#FF6B4A",
     "delta-fg": "#FF6B4A",
@@ -39,7 +39,7 @@
     "fg-subtle": "#5A7388",
     "accent": "#5CE1FF",
     "accent-fg": "#006F8C",
-    "accent-muted": "#5CE1FF29",
+    "accent-muted": "#5CE1FF26",
     "on-accent": "#06101A",
     "delta": "#FF6B4A",
     "delta-fg": "#B8361C",
@@ -132,9 +132,7 @@
     "control": "32px",
     "control-sm": "28px",
     "row": "36px",
-    "touch": "44px",
-    "sidebar": "200px",
-    "sidebar-rail": "56px"
+    "touch": "44px"
   },
   "breakpoint": {
     "xs": "360px",
@@ -147,8 +145,7 @@
   "motion": {
     "duration": {
       "fast": "120ms",
-      "base": "150ms",
-      "slow": "180ms"
+      "base": "180ms"
     },
     "easing": {
       "standard": "cubic-bezier(0.4, 0, 0.2, 1)",

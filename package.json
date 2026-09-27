@@ -1,18 +1,24 @@
 {
   "name": "@listepo/brand",
   "version": "0.1.0",
-  "description": "rtok brand system: design tokens (DTCG), CSS variables, Tailwind v3/v4 presets, Slint globals, IBM Plex Mono, logo and icons.",
+  "description": "rtok brand system: design tokens (DTCG), CSS variables, a Tailwind CSS v4 theme, plain-CSS components, IBM Plex Mono, logo and icons.",
   "private": true,
   "license": "SEE LICENSE IN README.md",
-  "files": ["dist", "fonts", "logo", "icons", "tokens", "components", "DESIGN.md", "README.md"],
+  "files": [
+    "dist",
+    "fonts",
+    "logo",
+    "icons",
+    "tokens",
+    "components",
+    "DESIGN.md",
+    "README.md"
+  ],
   "exports": {
     "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
     "./components.css": "./dist/components.css",
-    "./tailwind-preset": "./dist/tailwind.preset.js",
-    "./tailwind.preset.js": "./dist/tailwind.preset.js",
     "./tailwind-v4.css": "./dist/tailwind-v4.css",
-    "./tokens.slint": "./dist/tokens.slint",
     "./tokens.json": "./tokens/tokens.json",
     "./tokens.resolved.json": "./dist/tokens.resolved.json",
     "./fonts/*": "./fonts/*",
@@ -24,5 +30,7 @@
     "build": "node build.mjs",
     "check": "node build.mjs --check"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

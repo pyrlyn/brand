@@ -49,8 +49,6 @@
   --rtok-size-control-sm: 28px;
   --rtok-size-row: 36px;
   --rtok-size-touch: 44px;
-  --rtok-size-sidebar: 200px;
-  --rtok-size-sidebar-rail: 56px;
   --rtok-bp-xs: 360px; /* reference only: custom properties do not work in @media */
   --rtok-bp-sm: 640px; /* reference only: custom properties do not work in @media */
   --rtok-bp-md: 768px; /* reference only: custom properties do not work in @media */
@@ -58,8 +56,7 @@
   --rtok-bp-xl: 1440px; /* reference only: custom properties do not work in @media */
   --rtok-bp-2xl: 1920px; /* reference only: custom properties do not work in @media */
   --rtok-duration-fast: 120ms;
-  --rtok-duration-base: 150ms;
-  --rtok-duration-slow: 180ms;
+  --rtok-duration-base: 180ms;
   --rtok-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --rtok-ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
   --rtok-opacity-disabled: 0.4;
@@ -92,7 +89,7 @@
   --rtok-accent-rgb: 92 225 255;
   --rtok-accent-fg: #5CE1FF;
   --rtok-accent-fg-rgb: 92 225 255;
-  --rtok-accent-muted: #5CE1FF33;
+  --rtok-accent-muted: #5CE1FF26;
   --rtok-on-accent: #06101A;
   --rtok-on-accent-rgb: 6 16 26;
   --rtok-delta: #FF6B4A;
@@ -150,7 +147,7 @@
     --rtok-accent-rgb: 92 225 255;
     --rtok-accent-fg: #006F8C;
     --rtok-accent-fg-rgb: 0 111 140;
-    --rtok-accent-muted: #5CE1FF29;
+    --rtok-accent-muted: #5CE1FF26;
     --rtok-on-accent: #06101A;
     --rtok-on-accent-rgb: 6 16 26;
     --rtok-delta: #FF6B4A;
@@ -209,7 +206,7 @@
   --rtok-accent-rgb: 92 225 255;
   --rtok-accent-fg: #006F8C;
   --rtok-accent-fg-rgb: 0 111 140;
-  --rtok-accent-muted: #5CE1FF29;
+  --rtok-accent-muted: #5CE1FF26;
   --rtok-on-accent: #06101A;
   --rtok-on-accent-rgb: 6 16 26;
   --rtok-delta: #FF6B4A;
@@ -246,6 +243,5 @@
   :root {
     --rtok-duration-fast: 0.01ms;
     --rtok-duration-base: 0.01ms;
-    --rtok-duration-slow: 0.01ms;
   }
 }
