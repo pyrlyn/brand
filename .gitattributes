@@ -1,0 +1,5 @@
+dist/** linguist-generated=true
+*.png binary
+*.webp binary
+*.woff2 binary
+*.ttf binary

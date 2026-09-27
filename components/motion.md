@@ -1,0 +1,14 @@
+# Motion
+
+| Token | Value | Use | Source |
+|---|---|---|---|
+| `duration-fast` | 120ms | hover color / border | web/tailwind.config.js:56 |
+| `duration-base` | 150ms | selection background | kit.slint:168,207 |
+| `duration-slow` | 180ms | knobs, larger changes | web/tailwind.config.js:56 (`base` there) |
+| `ease-standard` | cubic-bezier(0.4, 0, 0.2, 1) | UI transitions | Tailwind default used by the web admin |
+| `ease-emphasized` | cubic-bezier(0.22, 1, 0.36, 1) | entrances, knobs | listepo/landing src/styles/global.css:76 |
+
+Reduced motion (`prefers-reduced-motion: reduce`): `dist/tokens.css` sets every
+`--rtok-duration-*` to 0.01ms, and `dist/components.css` stops animations inside `.rtok-root`
+(same rule as web/src/input.css:115-117). Decorative motion (the web admin orb, the landing mesh)
+must have a static fallback. Slint has no media query: pass the OS setting in and use 0ms.
