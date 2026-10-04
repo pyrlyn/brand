@@ -1,47 +1,76 @@
 # Pyrlyn brand
 
 Brand system for [github.com/pyrlyn](https://github.com/pyrlyn), as the npm package `@pyrlyn/brand`
-(installed from git). It holds:
+(installed from git). One shared **base layer** (the common design brandbook) and three **local
+brandbooks** that only hold what is specific to each product:
 
-- the rtok brand system (Bitset B · Hex Diff): design tokens, CSS variables with light/dark themes,
-  a Tailwind CSS v4 theme, plain-CSS components, IBM Plex Mono, the bitset logo, icons, guidelines
-  and reference screenshots;
-- the Pyrlyn company logo (the Prompt `>_` mark, lockups, favicons, GitHub avatar), see
-  [Pyrlyn logo](#pyrlyn-logo);
-- the landing web theme used by [pyrlyn.github.io/landing](https://pyrlyn.github.io/landing/), see
-  [Landing web theme](#landing-web-theme).
+- `base/`: shared tokens (type scale, spacing, radii, sizes, breakpoints, motion, opacity, glass
+  blur, and the list of semantic colour roles), IBM Plex Mono, UI icons and the plain-CSS
+  components (`.pyr-*`).
+- `brands/rtok`, `brands/ketch`, `brands/cox`: logos (SVG + PNG), colour tokens filling the base
+  roles plus the brand's own extras, and a short DESIGN.md with only the deltas. Each brand's
+  `tokens.json` extends `base/tokens.json` and its CSS starts with `@import` of the base.
+- `logo/pyrlyn/`: the Pyrlyn company logo, see [Pyrlyn logo](#pyrlyn-logo). `logo/listepo/`: the
+  legacy listepo tools mark.
+- `themes/landing/`: the landing web theme used by
+  [pyrlyn.github.io/landing](https://pyrlyn.github.io/landing/), see [Landing web theme](#landing-web-theme).
 
-`tokens/tokens.json` is the single source of truth for the rtok tokens. Everything in `dist/` is
-generated or copied by `node build.mjs` (Node ≥ 18, no dependencies) and is committed, so a git
-install needs no build step.
+Everything in `dist/` is generated or copied by `node build.mjs` (Node ≥ 18, no dependencies) and
+is committed, so a git install needs no build step. CI (`.github/workflows/ci.yml`) runs
+`node build.mjs --check`.
 
-## Contents
+## Structure
 
-| Path | What |
+```text
+base/
+  tokens.json            shared tokens + semantic roles (DTCG)      -> dist/base/tokens.css (--pyr-*)
+  DESIGN.md              shared guidelines
+  components/            components.css (.pyr-*) + specs          -> dist/base/components.css
+  fonts/                 IBM Plex Mono woff2 + OFL                  -> dist/base/fonts.css
+  icons/ui/              9 UI icons (currentColor)
+brands/
+  rtok/   tokens.json DESIGN.md logo/(+png/) icons/feature/ examples/ screenshots/ sources/
+  ketch/  tokens.json DESIGN.md logo/(+png/)
+  cox/    tokens.json DESIGN.md logo/(+png/)                         -> dist/brands/<brand>/tokens.css, logo/
+logo/
+  pyrlyn/                Pyrlyn company logo (+ _build/ generator)  -> dist/logo/pyrlyn/
+  listepo/               legacy listepo tools mark                   -> dist/logo/listepo/
+themes/landing/          landing web theme (tokens, components)      -> dist/landing/
+bin/pyrlyn-brand-copy.mjs  copies logo sets into a static folder
+build.mjs                generates dist/, --check for CI
+dist/                    generated; also the legacy rtok flat build (tokens.css, fonts.css,
+                         components.css, tailwind-v4.css, tokens.resolved.json)
+```
+
+## Import paths
+
+| Path (`@pyrlyn/brand/…`) | File |
 |---|---|
-| `tokens/tokens.json` | All tokens in W3C Design Tokens (DTCG) format, with the source file for every group |
-| `dist/tokens.css` | CSS custom properties `--rtok-*`: dark (default) + light, `[data-theme]`, `.dark`/`.light`, `prefers-color-scheme`, `prefers-reduced-motion` |
-| `dist/fonts.css` | `@font-face` for IBM Plex Mono 400/600/700 (woff2) |
-| `dist/components.css` | Plain-CSS components `.rtok-btn`, `.rtok-chip`, `.rtok-field`, `.rtok-card`, `.rtok-glass`, `.rtok-table`, `.rtok-nav-item`, `.rtok-pill`, `.rtok-switch`, … |
-| `dist/tailwind-v4.css` | Tailwind CSS v4 entry: `@theme` + `dark` variant (imports `tokens.css`) |
-| `dist/tokens.resolved.json` | Flat resolved values (dark, light, scales) for scripts and other tools |
-| `components/*.md` | Component specs: anatomy, tokens, default/hover/focus/disabled/error states |
-| `DESIGN.md` | Guidelines: color, type, shape, motion, interaction, logo and icon rules |
-| `fonts/` | IBM Plex Mono woff2 (400/600/700), `OFL.txt` (SIL Open Font License 1.1) |
-| `logo/` | rtok: `rtok-mark.svg`, `rtok-favicon.svg`, `rtok-wordmark.svg`, PNG exports in `logo/png/` |
-| `logo/pyrlyn/` | Pyrlyn logo: marks, lockups (on light, on dark, mono), favicons, apple-touch icon, GitHub avatar; generator in `_build/` |
-| `logo/listepo/` | `listepo-favicon.svg`, the legacy listepo tools mark the landing still serves at `/favicon.svg` |
-| `dist/logo/{rtok,pyrlyn,listepo}/` | Copies of the logo files, the paths the package exports (`@pyrlyn/brand/logo/<set>/<file>`) |
-| `themes/landing/` | Landing web theme, hand-authored: `tokens.css` (site palette, surfaces, type, space, radii) and `components.css` (glass, buttons, pill, badges, site brand, "by Pyrlyn" credit); copied to `dist/landing/` |
-| `bin/pyrlyn-brand-copy.mjs` | Copies logo sets into a static folder such as `public/` (see [Reuse in another site](#reuse-in-another-site)) |
-| `icons/ui/` | 9 UI icons (24×24, stroke 1.75, `currentColor`) used by the web admin |
-| `icons/feature/` | 6 "Signal / scope" feature icons (SVG + `@2x` PNG) used on the docs site |
-| `examples/index.html` | Demo page that loads only `dist/` and `fonts/` |
-| `screenshots/admin-responsive/` | Web admin responsive screenshots (100 PNGs, 360–1920px, dark + light) |
-| `sources/` | Verbatim snapshots of the files the tokens were taken from (see [Sources](#sources)) |
-| `SHA256SUMS` | Checksums of every file (`shasum -a 256 -c SHA256SUMS`) |
+| `base/tokens.css`, `base/fonts.css`, `base/components.css` | `dist/base/*` |
+| `base/tokens.json`, `base/fonts/*`, `base/icons/*` | sources |
+| `brands/<rtok\|ketch\|cox>/tokens.css` | `dist/brands/<brand>/tokens.css` (imports `base/tokens.css`) |
+| `brands/<brand>/tokens.json`, `brands/<brand>/tokens.resolved.json` | DTCG source / resolved values |
+| `brands/<brand>/logo/<file>` | SVGs and PNGs side by side (`dist/brands/<brand>/logo/`) |
+| `brands/rtok/icons/feature/*` | rtok feature icons |
+| `logo/pyrlyn/<file>`, `logo/listepo/<file>` | company logo, legacy listepo mark |
+| `landing/tokens.css`, `landing/components.css` | landing web theme |
 
-## Token values
+A brand page loads the brand tokens, the base fonts and, if wanted, the base components:
+
+```css
+@import "@pyrlyn/brand/brands/ketch/tokens.css";   /* base tokens + ketch roles (--pyr-*) + --ketch-* */
+@import "@pyrlyn/brand/base/fonts.css";
+@import "@pyrlyn/brand/base/components.css";       /* .pyr-btn, .pyr-chip, … in ketch colours */
+```
+
+**Legacy paths (v0.2.0), kept as aliases**: `tokens.css`, `fonts.css`, `components.css`,
+`tailwind-v4.css`, `tokens.resolved.json` (the rtok flat build with `--rtok-*` variables and `.rtok-*`
+classes, same values as before), `tokens.json` (→ `brands/rtok/tokens.json`), `logo/rtok/*` (→
+`brands/rtok/logo/*`), `fonts/*` (→ `base/fonts/*`), `icons/ui/*`, `icons/feature/*`, and every path
+the landing imports (`tokens.css`, `landing/*.css`, `logo/pyrlyn/*`, the `pyrlyn-brand-copy` sets
+`pyrlyn` and `listepo`). The rtok sections below use the legacy flat build.
+
+## rtok token values
 
 Brand constants: cyan `#5CE1FF` · coral `#FF6B4A` · navy `#06101A` · ink `#0B1A24` ·
 green `#3DDC97` · amber `#F5C451`. Font: IBM Plex Mono.
@@ -70,6 +99,9 @@ green `#3DDC97` · amber `#F5C451`. Font: IBM Plex Mono.
 
 Every `*-fg` and `fg*` token is ≥ 4.5:1 on `bg`, `surface` and `surface-2` in its theme.
 
+The scales below are the base layer (`--pyr-*` in `dist/base/tokens.css`); the legacy rtok build
+repeats them as `--rtok-*`.
+
 | Scale | Values |
 |---|---|
 | Space `--rtok-space-{0..8}` | 0 · 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 px |
@@ -81,7 +113,7 @@ Every `*-fg` and `fg*` token is ≥ 4.5:1 on `bg`, `surface` and `surface-2` in 
 | Elevation | `--rtok-shadow-e1/e2/e3` (inner `shine` line + drop shadows), `--rtok-ring` focus |
 | Motion | fast 120ms · base 180ms; standard `cubic-bezier(0.4,0,0.2,1)`, emphasized `cubic-bezier(0.22,1,0.36,1)`; all durations → 0.01ms under reduced motion |
 
-## Import
+## Using the rtok build
 
 The paths below assume the repo is available as `brand/` (git submodule or copy) or installed as
 the npm package `@pyrlyn/brand`. The package is `private` and not published; install it from git.
@@ -93,14 +125,14 @@ the npm package `@pyrlyn/brand`. The package is `private` and not published; ins
 git submodule add <brand-repo-url> brand
 
 # npm / pnpm / yarn from git (package name @pyrlyn/brand), pinned to a tag
-npm install github:pyrlyn/brand#v0.2.0
+npm install github:pyrlyn/brand#v0.3.0
 # or, locally:  npm install ../brand
 ```
 
 ### Plain HTML
 
 ```html
-<link rel="preload" href="/brand/fonts/IBMPlexMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/brand/base/fonts/IBMPlexMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/brand/dist/fonts.css">
 <link rel="stylesheet" href="/brand/dist/tokens.css">
 <link rel="stylesheet" href="/brand/dist/components.css"> <!-- optional -->
@@ -112,7 +144,7 @@ npm install github:pyrlyn/brand#v0.2.0
 </body>
 ```
 
-`dist/fonts.css` resolves fonts at `../fonts/`, so serve `dist/` and `fonts/` side by side (as in
+`dist/fonts.css` resolves fonts at `../base/fonts/`, so serve `dist/` and `base/fonts/` side by side (as in
 this repo). Use the variables anywhere: `color: var(--rtok-accent-fg)`,
 `background: rgb(var(--rtok-accent-rgb) / 0.15)`, `box-shadow: var(--rtok-shadow-e2)`.
 
@@ -136,10 +168,10 @@ focus-visible:shadow-ring font-mono text-sm duration-fast ease-emphasized h-cont
 breakpoints `xs: … 2xl:`. `dark:` matches `[data-theme="dark"]` or `.dark`; the colors already
 switch by themselves, so you rarely need it.
 
-Font URLs: bundlers (Vite, including `@tailwindcss/vite`) rewrite `../fonts/…` in `fonts.css` and
+Font URLs: bundlers (Vite, including `@tailwindcss/vite`) rewrite `../base/fonts/…` in `fonts.css` and
 emit the woff2 files. The standalone CLI (`@tailwindcss/cli`) leaves the URL as written, so put
-`fonts/` next to the directory the output CSS lands in (output `…/css/app.css` → fonts at
-`…/fonts/`).
+`base/fonts/` next to the directory the output CSS lands in (output `…/css/app.css` → fonts at
+`…/base/fonts/`).
 
 ### Astro
 
@@ -147,7 +179,7 @@ Tailwind v4 through its Vite plugin:
 
 ```sh
 npm install tailwindcss @tailwindcss/vite
-npm install github:pyrlyn/brand#v0.2.0   # or ../brand
+npm install github:pyrlyn/brand#v0.3.0   # or ../brand
 ```
 
 ```js
@@ -169,7 +201,7 @@ export default defineConfig({ vite: { plugins: [tailwindcss()] } });
 ---
 // src/layouts/Base.astro
 import "../styles/global.css";
-import fontUrl from "@pyrlyn/brand/fonts/IBMPlexMono-Regular.woff2?url";
+import fontUrl from "@pyrlyn/brand/base/fonts/IBMPlexMono-Regular.woff2?url";
 ---
 <html lang="en" data-theme="dark">
   <head><link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin /></head>
@@ -192,13 +224,13 @@ repo as a submodule at `brand/`:
 ```
 
 ```toml
-# hugo.toml: serve the fonts at /fonts/ so ../fonts/ in the CSS resolves from /css/app.css
+# hugo.toml: serve the fonts at /base/fonts/ so ../base/fonts/ in the CSS resolves from /css/app.css
 [[module.mounts]]
 source = "static"
 target = "static"
 [[module.mounts]]
-source = "brand/fonts"
-target = "static/fonts"
+source = "brand/base/fonts"
+target = "static/base/fonts"
 ```
 
 ```sh
@@ -207,7 +239,7 @@ npx @tailwindcss/cli -i assets/css/app.css -o static/css/app.css --watch & hugo 
 ```
 
 ```go-html-template
-<link rel="preload" href="{{ "fonts/IBMPlexMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "base/fonts/IBMPlexMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ "css/app.css" | relURL }}">
 ```
 
@@ -217,16 +249,16 @@ through Hugo Pipes (`resources.Get`) to use the `--rtok-*` variables directly.
 ### Rebuild
 
 ```sh
-node build.mjs          # regenerate dist/ after editing tokens/tokens.json
+node build.mjs          # regenerate dist/ after editing base/ or brands/*/ tokens
 node build.mjs --check  # CI: fails if dist/ is stale
 ```
 
 ## Logo usage
 
-- Mark: `logo/rtok-mark.svg` (32×32, navy tile, bitset dots). Favicon: `logo/rtok-favicon.svg`
-  (`<link rel="icon" href="rtok-favicon.svg" type="image/svg+xml">`), PNG fallbacks in `logo/png/`.
+- Mark: `brands/rtok/logo/rtok-mark.svg` (32×32, navy tile, bitset dots). Favicon: `brands/rtok/logo/rtok-favicon.svg`
+  (`<link rel="icon" href="rtok-favicon.svg" type="image/svg+xml">`), PNG fallbacks in `brands/rtok/logo/png/`.
   Package paths: `@pyrlyn/brand/logo/rtok/<file>` (SVGs and PNGs side by side).
-- Lockup: `logo/rtok-wordmark.svg` (`RTOK` + `Δtok` + `bitset`, on its own navy background; text
+- Lockup: `brands/rtok/logo/rtok-wordmark.svg` (`RTOK` + `Δtok` + `bitset`, on its own navy background; text
   is set in IBM Plex Mono, so outline it before using it where the font may be missing).
 - The mark always keeps its dark tile, in light and dark UIs. Don't recolor, rotate, crop, or
   rearrange the dots; coral cells are the measured cuts. Minimum size 16px.
@@ -277,7 +309,7 @@ layout CSS. Fonts are the consumer's: the theme names Inter (the landing self-ho
 ## Reuse in another site
 
 ```sh
-npm install github:pyrlyn/brand#v0.2.0
+npm install github:pyrlyn/brand#v0.3.0
 ```
 
 ```css
@@ -343,8 +375,8 @@ others = rtok `origin/main` at `559a7a11`.
 | Elevation | web `tailwind.config.js:46-48` e1–e3 · site `custom.css:27` `0 24px 48px rgba(0,0,0,.45)` hero, `:118` mobile · landing `global.css` `--shadow-1..3` (listepo shell) | web e1–e3 | Only rtok-specific scale; the hero shadow is close to `e3`. |
 | Font | web `web/assets/fonts/*.woff2`, wordmark SVG, v3 pack: IBM Plex Mono · docs site: Hextra default fonts (no override in `custom.css`) · landing `global.css:61-62` Inter + system mono (rtok page included) | IBM Plex Mono | The brand pack and the product UI use it; the two sites never loaded it. |
 | Hextra primary | site `custom.css:3-5` `hsl(190 100% 68%)` ≈ `#5CE4FF` | `#5CE1FF` = `hsl(191 100% 68%)` | 1° hue drift; set `--primary-hue: 191deg` when adopting. |
-| Mark on light | site `static/logo.svg` and web `assets/logo.svg`: identical, navy `#06101A` tile · v3 `webui-mock/themes/logo-light.svg`: ink `#0B1A24` tile, coral `#E85A3C`, dim 0.4 (not used anywhere) · v3 `TOKENS.md` `mark-tile` light `#0B1A24` | one mark, `logo/rtok-mark.svg`, both themes; `mark-tile` token keeps `#0B1A24` light | The live SVG is identical on every surface; the light variant stayed a mock. |
-| Wordmark | site `static/logo-wordmark.svg` = `logo-wordmark-dark.svg` (byte-identical) · PNG `logo-wordmark-2x.png` = `logo-wordmark-dark-2x.png` | one `logo/rtok-wordmark.svg` | Duplicates, not variants. |
+| Mark on light | site `static/logo.svg` and web `assets/logo.svg`: identical, navy `#06101A` tile · v3 `webui-mock/themes/logo-light.svg`: ink `#0B1A24` tile, coral `#E85A3C`, dim 0.4 (not used anywhere) · v3 `TOKENS.md` `mark-tile` light `#0B1A24` | one mark, `brands/rtok/logo/rtok-mark.svg`, both themes; `mark-tile` token keeps `#0B1A24` light | The live SVG is identical on every surface; the light variant stayed a mock. |
+| Wordmark | site `static/logo-wordmark.svg` = `logo-wordmark-dark.svg` (byte-identical) · PNG `logo-wordmark-2x.png` = `logo-wordmark-dark-2x.png` | one `brands/rtok/logo/rtok-wordmark.svg` | Duplicates, not variants. |
 | Border naming | web `line`/`line-strong` · v3 `hairline`/`hairline-strong` · site `#1A3348` literals | `border`/`border-strong` | Values agree; names unified. |
 | Surface ladder | v3 `surface-1`, `surface-2` · web adds `surface-3`, `warn`, `shine`, glass alpha | web ladder | No conflict; the v3 pack lacks these. |
 | TUI palette | `src/tui/theme.rs:10-18` ANSI Cyan / DarkGray / Green / Yellow / Red | unchanged | Terminal palette colors, not hex; they map to accent / fg-subtle / success / warn / danger. |
@@ -371,8 +403,8 @@ the steps to switch each surface to this repo.
    `delta`/`success`/`warn` stay; `rounded-*`, `shadow-e*`, `shadow-ring`, `duration-fast` stay;
    `duration-base` becomes the token's 180ms (same as today). Either keep the `@layer components`
    classes (in v4 write them as `@utility` or plain CSS) or use `dist/components.css`.
-4. `web/assets/fonts/*.woff2` and `web/assets/icons|logo.svg` are identical to `fonts/`,
-   `icons/ui/`, `logo/rtok-mark.svg`.
+4. `web/assets/fonts/*.woff2` and `web/assets/icons|logo.svg` are identical to `base/fonts/`,
+   `base/icons/ui/`, `brands/rtok/logo/rtok-mark.svg`.
 5. Rebuild `web/tailwind.css` with
    `npx @tailwindcss/cli -i src/input.css -o tailwind.css --minify` (update `web/README.md`) and
    re-shoot `web/screenshots/`.
@@ -389,8 +421,8 @@ the steps to switch each surface to this repo.
 3. Keep `--rtok-bp-*` names or switch to the Tailwind names (values are the same).
 4. Optional: load `dist/fonts.css` and set Plex Mono for headings.
 5. `site/static/{logo,logo-dark,favicon,logo-wordmark*}.svg`, `site/static/icons/*` and
-   `site/data/icons.yaml` must stay in `site/` (Hugo serves them); refresh them from `logo/` and
-   `icons/feature/`. `just site` must pass (`--panicOnWarning`).
+   `site/data/icons.yaml` must stay in `site/` (Hugo serves them); refresh them from `brands/rtok/logo/` and
+   `brands/rtok/icons/feature/`. `just site` must pass (`--panicOnWarning`).
 
 **rtok page on the listepo project site** (listepo/landing; not touched in this change)
 1. `docs/site.md:15` in rtok (synced to `content/projects/rtok.md` by `sync-docs.yml`): set
@@ -406,7 +438,7 @@ the steps to switch each surface to this repo.
 
 ## Sources
 
-`sources/` holds verbatim copies (sha256-verified at import) of everything the tokens came from:
+`brands/rtok/sources/` holds verbatim copies (sha256-verified at import) of everything the tokens came from:
 
 - `sources/rtok/<path>`: files from `listepo/rtok` `origin/main` at `559a7a11`: docs-site CSS, icons.yaml and `site/static` brand assets;
   `docs/assets/landing-retina/*` (the 19 retina PNG exports, which moved here from rtok);
@@ -417,10 +449,10 @@ the steps to switch each surface to this repo.
   `webui-mock/themes/TOKENS.md`, alternative marks and icon sets, previews).
   19 files byte-identical to files already here were left out; see `DUPLICATES.md` there.
 
-These are provenance snapshots, not presets. Only `tokens/tokens.json` and `dist/` are
+These are provenance snapshots, not presets. Only `base/tokens.json`, `brands/rtok/tokens.json` and `dist/` are
 authoritative.
 
 ## License
 
-Fonts: IBM Plex Mono, SIL Open Font License 1.1 (`fonts/OFL.txt`). The rtok name, mark and other
+Fonts: IBM Plex Mono, SIL Open Font License 1.1 (`base/fonts/OFL.txt`). The rtok name, mark and other
 brand assets have no license grant yet; ask the owner before using them outside listepo projects.
