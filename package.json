@@ -1,28 +1,40 @@
 {
-  "name": "@listepo/brand",
-  "version": "0.1.0",
-  "description": "rtok brand system: design tokens (DTCG), CSS variables, a Tailwind CSS v4 theme, plain-CSS components, IBM Plex Mono, logo and icons.",
+  "name": "@pyrlyn/brand",
+  "version": "0.2.0",
+  "description": "Brand system: design tokens, CSS, components, logos and icons (rtok tokens, the landing web theme, Pyrlyn and rtok logos).",
   "private": true,
   "license": "SEE LICENSE IN README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyrlyn/brand.git"
+  },
   "files": [
     "dist",
+    "bin",
     "fonts",
     "logo",
     "icons",
     "tokens",
+    "themes",
     "components",
     "DESIGN.md",
     "README.md"
   ],
+  "bin": {
+    "pyrlyn-brand-copy": "bin/pyrlyn-brand-copy.mjs"
+  },
   "exports": {
+    "./package.json": "./package.json",
     "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
     "./components.css": "./dist/components.css",
     "./tailwind-v4.css": "./dist/tailwind-v4.css",
     "./tokens.json": "./tokens/tokens.json",
     "./tokens.resolved.json": "./dist/tokens.resolved.json",
+    "./landing/tokens.css": "./dist/landing/tokens.css",
+    "./landing/components.css": "./dist/landing/components.css",
+    "./logo/*": "./dist/logo/*",
     "./fonts/*": "./fonts/*",
-    "./logo/*": "./logo/*",
     "./icons/*": "./icons/*"
   },
   "style": "dist/tokens.css",

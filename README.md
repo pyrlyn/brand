@@ -1,12 +1,19 @@
-# rtok brand
+# Pyrlyn brand
 
-The rtok brand system (Bitset B · Hex Diff) as a portable package you can drop into any website
-or app: design tokens, CSS variables with light/dark themes, a Tailwind CSS v4
-theme, plain-CSS components, IBM Plex Mono, the bitset logo, icons, guidelines and reference
-screenshots.
+Brand system for [github.com/pyrlyn](https://github.com/pyrlyn), as the npm package `@pyrlyn/brand`
+(installed from git). It holds:
 
-`tokens/tokens.json` is the single source of truth. Everything in `dist/` is generated from it by
-`node build.mjs` (Node ≥ 18, no dependencies).
+- the rtok brand system (Bitset B · Hex Diff): design tokens, CSS variables with light/dark themes,
+  a Tailwind CSS v4 theme, plain-CSS components, IBM Plex Mono, the bitset logo, icons, guidelines
+  and reference screenshots;
+- the Pyrlyn company logo (the Prompt `>_` mark, lockups, favicons, GitHub avatar), see
+  [Pyrlyn logo](#pyrlyn-logo);
+- the landing web theme used by [pyrlyn.github.io/landing](https://pyrlyn.github.io/landing/), see
+  [Landing web theme](#landing-web-theme).
+
+`tokens/tokens.json` is the single source of truth for the rtok tokens. Everything in `dist/` is
+generated or copied by `node build.mjs` (Node ≥ 18, no dependencies) and is committed, so a git
+install needs no build step.
 
 ## Contents
 
@@ -21,7 +28,12 @@ screenshots.
 | `components/*.md` | Component specs: anatomy, tokens, default/hover/focus/disabled/error states |
 | `DESIGN.md` | Guidelines: color, type, shape, motion, interaction, logo and icon rules |
 | `fonts/` | IBM Plex Mono woff2 (400/600/700), `OFL.txt` (SIL Open Font License 1.1) |
-| `logo/` | `rtok-mark.svg`, `rtok-favicon.svg`, `rtok-wordmark.svg`, PNG exports in `logo/png/` |
+| `logo/` | rtok: `rtok-mark.svg`, `rtok-favicon.svg`, `rtok-wordmark.svg`, PNG exports in `logo/png/` |
+| `logo/pyrlyn/` | Pyrlyn logo: marks, lockups (on light, on dark, mono), favicons, apple-touch icon, GitHub avatar; generator in `_build/` |
+| `logo/listepo/` | `listepo-favicon.svg`, the legacy listepo tools mark the landing still serves at `/favicon.svg` |
+| `dist/logo/{rtok,pyrlyn,listepo}/` | Copies of the logo files, the paths the package exports (`@pyrlyn/brand/logo/<set>/<file>`) |
+| `themes/landing/` | Landing web theme, hand-authored: `tokens.css` (site palette, surfaces, type, space, radii) and `components.css` (glass, buttons, pill, badges, site brand, "by Pyrlyn" credit); copied to `dist/landing/` |
+| `bin/pyrlyn-brand-copy.mjs` | Copies logo sets into a static folder such as `public/` (see [Reuse in another site](#reuse-in-another-site)) |
 | `icons/ui/` | 9 UI icons (24×24, stroke 1.75, `currentColor`) used by the web admin |
 | `icons/feature/` | 6 "Signal / scope" feature icons (SVG + `@2x` PNG) used on the docs site |
 | `examples/index.html` | Demo page that loads only `dist/` and `fonts/` |
@@ -72,7 +84,7 @@ Every `*-fg` and `fg*` token is ≥ 4.5:1 on `bg`, `surface` and `surface-2` in 
 ## Import
 
 The paths below assume the repo is available as `brand/` (git submodule or copy) or installed as
-the npm package `@listepo/brand`. The package is `private` and not published; install it from git.
+the npm package `@pyrlyn/brand`. The package is `private` and not published; install it from git.
 
 ### Get the files
 
@@ -80,8 +92,8 @@ the npm package `@listepo/brand`. The package is `private` and not published; in
 # git submodule (pin a commit, update with `git submodule update --remote`)
 git submodule add <brand-repo-url> brand
 
-# npm / pnpm / yarn from git (package name @listepo/brand)
-npm install git+ssh://git@github.com/<owner>/brand.git
+# npm / pnpm / yarn from git (package name @pyrlyn/brand), pinned to a tag
+npm install github:pyrlyn/brand#v0.2.0
 # or, locally:  npm install ../brand
 ```
 
@@ -113,9 +125,9 @@ custom variant, and it imports `dist/tokens.css` (the plain CSS variables it map
 ```css
 /* your entry CSS */
 @import "tailwindcss";
-@import "@listepo/brand/fonts.css";
-@import "@listepo/brand/tailwind-v4.css"; /* also imports tokens.css */
-@import "@listepo/brand/components.css";  /* optional plain-CSS components */
+@import "@pyrlyn/brand/fonts.css";
+@import "@pyrlyn/brand/tailwind-v4.css"; /* also imports tokens.css */
+@import "@pyrlyn/brand/components.css";  /* optional plain-CSS components */
 ```
 
 Utilities: `bg-bg bg-surface bg-surface-2 text-fg text-fg-muted border-border bg-accent
@@ -135,7 +147,7 @@ Tailwind v4 through its Vite plugin:
 
 ```sh
 npm install tailwindcss @tailwindcss/vite
-npm install git+ssh://git@github.com/<owner>/brand.git   # or ../brand
+npm install github:pyrlyn/brand#v0.2.0   # or ../brand
 ```
 
 ```js
@@ -149,15 +161,15 @@ export default defineConfig({ vite: { plugins: [tailwindcss()] } });
 ```css
 /* src/styles/global.css */
 @import "tailwindcss";
-@import "@listepo/brand/fonts.css";
-@import "@listepo/brand/tailwind-v4.css";
+@import "@pyrlyn/brand/fonts.css";
+@import "@pyrlyn/brand/tailwind-v4.css";
 ```
 
 ```astro
 ---
 // src/layouts/Base.astro
 import "../styles/global.css";
-import fontUrl from "@listepo/brand/fonts/IBMPlexMono-Regular.woff2?url";
+import fontUrl from "@pyrlyn/brand/fonts/IBMPlexMono-Regular.woff2?url";
 ---
 <html lang="en" data-theme="dark">
   <head><link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin /></head>
@@ -213,11 +225,95 @@ node build.mjs --check  # CI: fails if dist/ is stale
 
 - Mark: `logo/rtok-mark.svg` (32×32, navy tile, bitset dots). Favicon: `logo/rtok-favicon.svg`
   (`<link rel="icon" href="rtok-favicon.svg" type="image/svg+xml">`), PNG fallbacks in `logo/png/`.
+  Package paths: `@pyrlyn/brand/logo/rtok/<file>` (SVGs and PNGs side by side).
 - Lockup: `logo/rtok-wordmark.svg` (`RTOK` + `Δtok` + `bitset`, on its own navy background; text
   is set in IBM Plex Mono, so outline it before using it where the font may be missing).
 - The mark always keeps its dark tile, in light and dark UIs. Don't recolor, rotate, crop, or
   rearrange the dots; coral cells are the measured cuts. Minimum size 16px.
 - Full rules: [DESIGN.md](DESIGN.md#logo).
+
+## Pyrlyn logo
+
+The parent brand of [github.com/pyrlyn](https://github.com/pyrlyn). Concept "Prompt": the shell
+prompt `>_` as a chevron and an amber cursor bar. Product logos stay primary; the Pyrlyn logo is for
+"by Pyrlyn" credits and org-level use. Files live in `logo/pyrlyn/` (details in
+[`logo/pyrlyn/README.md`](logo/pyrlyn/README.md)) and are exported as
+`@pyrlyn/brand/logo/pyrlyn/<file>`:
+
+| File | Use |
+|---|---|
+| `pyrlyn-mark-on-light.svg` / `-1000.png`, `pyrlyn-mark-on-dark.svg` / `-1000.png` | Mark for light / dark backgrounds |
+| `pyrlyn-mark-mono.svg` | Mark in `currentColor` |
+| `pyrlyn-lockup-on-light.svg` / `-2000.png`, `pyrlyn-lockup-on-dark.svg` / `-2000.png` | Mark + `pyrlyn` wordmark |
+| `pyrlyn-lockup-mono.svg` | Lockup in `currentColor` |
+| `pyrlyn-favicon.svg`, `pyrlyn-favicon-32.png`, `pyrlyn-favicon-64.png` | Favicons (the SVG follows `prefers-color-scheme`) |
+| `pyrlyn-apple-touch-icon.png` | 180×180 apple-touch icon |
+| `pyrlyn-github-avatar-1000.png` | GitHub org avatar |
+
+- Colours: ink `#0C0E11`, paper `#F4F2ED`, amber `#F2B33D` on dark and `#B97C06` on light. The amber
+  cursor is the only accent.
+- Wordmark: JetBrains Mono 600, outlined to paths (no font needed). Lockup viewBox ratio 109:26.
+- Rules: [DESIGN.md](DESIGN.md#pyrlyn-logo).
+
+## Landing web theme
+
+`themes/landing/` is the visual identity of the landing (pyrlyn.github.io/landing). It is not the
+rtok token set: the names are the landing's own (`--accent`, `--accent-2`, `--accent-light`, `--bg`,
+`--fg`, `--muted`, `--surface*`, `--glass-*`, `--hairline*`, `--blur-*`, `--shadow-*`, `--focus`,
+`--font-sans`, `--font-mono`, `--fs-*`, `--s-1`…`--s-10`, `--r-*`, `--container`, `--ease`). The
+home accent is `#4C8DFF`; product pages override `--accent` / `--accent-2` / `--accent-light` / `--bg`
+on `<html>`.
+
+- `@pyrlyn/brand/landing/tokens.css`: the `:root` tokens.
+- `@pyrlyn/brand/landing/components.css`: `.glass` (+ `--thin`, `--thick`), `.shine`, `.btn`
+  (+ `--lg`, `--block`, `--primary`, `--glass`, `aria-disabled`), `.eyebrow`, `.pill`, `.badge`
+  (+ `--accent`, `--line`, `--version`), `.brand` / `.brand__mark`, `.pyrlyn-by` (+ `--nav`,
+  `--hero`, `--footer`).
+
+Import order matters: tokens first, then the page reset/background, then the components, then page
+layout CSS. Fonts are the consumer's: the theme names Inter (the landing self-hosts it through
+`@fontsource-variable/inter`) and a system monospace stack.
+
+## Reuse in another site
+
+```sh
+npm install github:pyrlyn/brand#v0.2.0
+```
+
+```css
+@import "@pyrlyn/brand/tokens.css";              /* rtok --rtok-* variables */
+@import "@pyrlyn/brand/landing/tokens.css";      /* landing/Pyrlyn web theme */
+@import "@pyrlyn/brand/landing/components.css";
+```
+
+```astro
+---
+// inline SVG (Vite): the markup ends up in the HTML, so it can take currentColor / CSS variables
+import lockup from "@pyrlyn/brand/logo/pyrlyn/pyrlyn-lockup-on-dark.svg?raw";
+// or a hashed asset URL
+import lockupUrl from "@pyrlyn/brand/logo/pyrlyn/pyrlyn-lockup-on-dark.svg?url";
+---
+<Fragment set:html={lockup} />
+```
+
+Files that need a stable public URL (favicons, `<img src>` referenced from outside) can be copied into
+a static folder with the bundled helper; run it from the site's own `predev` / `prebuild` scripts (no
+postinstall hook) and git-ignore the output:
+
+```jsonc
+// package.json
+"scripts": {
+  "brand": "pyrlyn-brand-copy public pyrlyn",   // -> public/pyrlyn/pyrlyn-*.svg|png
+  "predev": "npm run brand",
+  "prebuild": "npm run brand"
+}
+```
+
+`pyrlyn-brand-copy <dest> [set ...] [--favicon <set>/<file>]`: sets are `pyrlyn`, `rtok`,
+`listepo` (default: all); `--favicon` also writes `<dest>/favicon.svg`.
+
+To update: tag a new version here (`git tag vX.Y.Z && git push origin vX.Y.Z`), then in the site run
+`npm install github:pyrlyn/brand#vX.Y.Z` (updates `package.json` and the lockfile) and commit both.
 
 ## Conflicts
 

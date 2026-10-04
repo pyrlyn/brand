@@ -2,7 +2,10 @@
 // Regenerates dist/ from tokens/tokens.json. No dependencies (Node >= 18).
 //   node build.mjs          write dist/
 //   node build.mjs --check  exit 1 if dist/ is out of date
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+// Besides the generated CSS/JSON it copies, byte for byte, the landing web theme (themes/landing/*.css ->
+// dist/landing/) and the logos (logo/ -> dist/logo/rtok/, logo/pyrlyn/ -> dist/logo/pyrlyn/,
+// logo/listepo/ -> dist/logo/listepo/), so consumers only ever import from dist/.
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -190,13 +193,28 @@ const out = {
   "dist/tailwind-v4.css": v4Css,
   "dist/tokens.resolved.json": JSON.stringify(resolved, null, 2) + "\n",
 };
+// ---------- copied as-is: landing theme + logos ----------
+// Files only (no recursion), skipping dotfiles; logo/pyrlyn/_build/ (the generator) stays out of dist/.
+const files = (dir) =>
+  readdirSync(join(root, dir)).filter((f) => !f.startsWith(".") && statSync(join(root, dir, f)).isFile()).sort();
+const copies = [
+  ["themes/landing", "dist/landing"],
+  ["logo", "dist/logo/rtok"],
+  ["logo/png", "dist/logo/rtok"],
+  ["logo/pyrlyn", "dist/logo/pyrlyn"],
+  ["logo/listepo", "dist/logo/listepo"],
+];
+for (const [from, to] of copies) for (const f of files(from)) out[`${to}/${f}`] = readFileSync(join(root, from, f));
+
 const check = process.argv.includes("--check");
 let stale = 0;
+const same = (p, content) => existsSync(p) && Buffer.from(readFileSync(p)).equals(Buffer.from(content));
 for (const [rel, content] of Object.entries(out)) {
   const p = join(root, rel);
   if (check) {
-    if (!existsSync(p) || readFileSync(p, "utf8") !== content) { console.error(`stale: ${rel}`); stale++; }
+    if (!same(p, content)) { console.error(`stale: ${rel}`); stale++; }
   } else {
+    if (same(p, content)) continue;
     mkdirSync(dirname(p), { recursive: true });
     writeFileSync(p, content);
     console.log(`wrote ${rel}`);
