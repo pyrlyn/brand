@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # Regenerates dist/ in memory and fails if the committed dist/ differs, a file in dist/ is
+      # no longer produced, or an "exports"/"bin" target in package.json is missing.
+      - name: dist/ is up to date
+        run: node build.mjs --check
+      - name: Checksums match
+        run: sha256sum -c SHA256SUMS --quiet
+      - name: Import paths resolve to packed files
+        run: |
+          npm pack --dry-run --json > "$RUNNER_TEMP/pack.json"
+          node scripts/check-pack.mjs "$RUNNER_TEMP/pack.json"
