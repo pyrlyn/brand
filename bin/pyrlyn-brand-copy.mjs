@@ -6,8 +6,8 @@
 //   pyrlyn-brand-copy <dest> [set ...] [--favicon <set>/<file>]
 //
 //   <dest>     target folder; each set lands in <dest>/<set>/ (created if missing)
-//   set        logo sets: pyrlyn, listepo (dist/logo/<set>/) and the brands rtok, ketch, cox
-//              (dist/brands/<brand>/logo/); default: all
+//   set        logo sets: pyrlyn, listepo (dist/logo/<set>/); default: all. Product logos (rtok, ketch,
+//              cox) live in each product repo's brand/logo/
 //   --favicon  also copy dist/logo/<set>/<file> to <dest>/favicon.svg (or .png, by the source extension)
 //
 // Example (package.json): "prebuild": "pyrlyn-brand-copy public pyrlyn --favicon listepo/listepo-favicon.svg"
@@ -20,7 +20,6 @@ const dirsIn = (d) => (existsSync(d) ? readdirSync(d).filter((x) => statSync(joi
 // set name -> folder with its files
 const SETS = Object.fromEntries([
   ...dirsIn(join(dist, "logo")).map((s) => [s, join(dist, "logo", s)]),
-  ...dirsIn(join(dist, "brands")).filter((b) => existsSync(join(dist, "brands", b, "logo"))).map((b) => [b, join(dist, "brands", b, "logo")]),
 ]);
 const args = process.argv.slice(2);
 const fi = args.indexOf("--favicon");

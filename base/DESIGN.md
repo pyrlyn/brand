@@ -3,15 +3,16 @@
 The shared layer every Pyrlyn brand builds on: type, shape, space, depth, motion, interaction and
 icons. Values live in [`tokens.json`](tokens.json) (built to `dist/base/tokens.css` as `--pyr-*`);
 the shared components are in [`components/`](components/). Brand-specific colour and logo rules
-are in each brandbook: [rtok](../brands/rtok/DESIGN.md), [ketch](../brands/ketch/DESIGN.md),
-[cox](../brands/cox/DESIGN.md). The Pyrlyn company logo: [../DESIGN.md](../DESIGN.md#pyrlyn-logo).
+are in each product's brandbook (`brand/DESIGN.md` in the product repo):
+[rtok](https://github.com/pyrlyn/rtok/blob/main/brand/DESIGN.md), [ketch](https://github.com/pyrlyn/ketch/blob/main/brand/DESIGN.md),
+[cox](https://github.com/pyrlyn/cox/blob/main/brand/DESIGN.md). The Pyrlyn company logo: [../DESIGN.md](../DESIGN.md#pyrlyn-logo).
 
-The values come from the rtok system (the most complete one; see `brands/rtok/sources/`).
+The values come from the rtok system (the most complete one; see `brand/sources/` and `brand/PROVENANCE.md` in pyrlyn/rtok).
 
 ## Semantic colour roles
 
 The base defines no colours, only the roles a brand must fill. Each brand sets them as `--pyr-*`
-in `dist/brands/<brand>/tokens.css`, so the base components work with any brand.
+in its pack's `brand/dist/tokens.css`, so the base components work with any brand.
 
 - Core (every theme of every brand): `bg`, `surface`, `surface-2`, `border`, `fg`, `fg-muted`,
   `fg-subtle`, `accent`, `accent-muted` (accent wash), `mark-tile`.
@@ -62,4 +63,4 @@ in `dist/brands/<brand>/tokens.css`, so the base components work with any brand.
 
 - `icons/ui/`: 24×24, stroke 1.75, round caps, `currentColor`.
 - Icons inherit text colour: `fg-muted` by default, `accent` (or `accent-fg` on light) when active.
-- Brand-specific icon sets live in the brandbook (rtok: `brands/rtok/icons/feature/`).
+- Brand-specific icon sets live in the product's pack (rtok: `brand/icons/feature/`, `brand/icons/ui/`).
