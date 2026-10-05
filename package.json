@@ -1,7 +1,7 @@
 {
   "name": "@pyrlyn/brand",
-  "version": "0.3.0",
-  "description": "Pyrlyn brand system: a shared base layer (tokens, fonts, icons, components) and the rtok, ketch and cox brandbooks, plus the Pyrlyn logo and the landing web theme.",
+  "version": "0.4.0",
+  "description": "Pyrlyn brand system: the shared base layer (tokens, fonts, icons, components) that the product brand packs extend, plus the Pyrlyn logo and the landing web theme.",
   "private": true,
   "license": "SEE LICENSE IN README.md",
   "repository": {
@@ -12,20 +12,11 @@
     "dist",
     "bin",
     "base",
-    "brands/rtok/tokens.json",
-    "brands/rtok/DESIGN.md",
-    "brands/rtok/logo/",
-    "brands/ketch/tokens.json",
-    "brands/ketch/DESIGN.md",
-    "brands/ketch/logo/",
-    "brands/cox/tokens.json",
-    "brands/cox/DESIGN.md",
-    "brands/cox/logo/",
-    "brands/rtok/icons/",
     "logo",
     "themes",
     "DESIGN.md",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "bin": {
     "pyrlyn-brand-copy": "bin/pyrlyn-brand-copy.mjs"
@@ -39,26 +30,12 @@
     "./base/tokens.resolved.json": "./dist/base/tokens.resolved.json",
     "./base/fonts/*": "./base/fonts/*",
     "./base/icons/*": "./base/icons/*",
-    "./brands/*/tokens.css": "./dist/brands/*/tokens.css",
-    "./brands/*/tokens.json": "./brands/*/tokens.json",
-    "./brands/*/tokens.resolved.json": "./dist/brands/*/tokens.resolved.json",
-    "./brands/rtok/logo/*": "./dist/brands/rtok/logo/*",
-    "./brands/ketch/logo/*": "./dist/brands/ketch/logo/*",
-    "./brands/cox/logo/*": "./dist/brands/cox/logo/*",
-    "./brands/rtok/icons/*": "./brands/rtok/icons/*",
     "./landing/tokens.css": "./dist/landing/tokens.css",
     "./landing/components.css": "./dist/landing/components.css",
-    "./logo/rtok/*": "./dist/brands/rtok/logo/*",
     "./logo/*": "./dist/logo/*",
-    "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
-    "./components.css": "./dist/components.css",
-    "./tailwind-v4.css": "./dist/tailwind-v4.css",
-    "./tokens.json": "./brands/rtok/tokens.json",
-    "./tokens.resolved.json": "./dist/tokens.resolved.json",
     "./fonts/*": "./base/fonts/*",
-    "./icons/ui/*": "./base/icons/ui/*",
-    "./icons/feature/*": "./brands/rtok/icons/feature/*"
+    "./icons/ui/*": "./base/icons/ui/*"
   },
   "style": "dist/base/tokens.css",
   "scripts": {

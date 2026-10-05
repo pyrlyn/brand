@@ -1,4 +1,4 @@
-/* Pyrlyn base components: plain CSS on top of a brand theme (dist/brands/<brand>/tokens.css, which imports
+/* Pyrlyn base components: plain CSS on top of a brand theme (a product's brand/dist/tokens.css, which imports
  * dist/base/tokens.css) + dist/base/fonts.css. Class names are prefixed .pyr-*; colours come from the semantic
  * roles (--pyr-bg, --pyr-accent …), so the same markup takes each brand. States use ARIA attributes.
  * Values come from the rtok web admin (web/src/input.css on design/web-admin). Specs: base/components/*.md. */
