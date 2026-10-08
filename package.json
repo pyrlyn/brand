@@ -47,7 +47,8 @@
   "style": "dist/base/tokens.css",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node build.mjs --check"
+    "check": "node build.mjs --check",
+    "test": "node --test tests/*.test.mjs"
   },
   "engines": {
     "node": ">=18"
