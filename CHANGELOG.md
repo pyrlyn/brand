@@ -8,6 +8,11 @@ fonts, icons and components), so `dist/base/*` resolves exactly as in v0.3.0. On
 comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/DESIGN.md`,
 `base/components/components.css` and the generated CSS headers).
 
+### Added
+
+- `brands/mailune`: Mailune tokens, logos, package exports, and `dist/brands/mailune/`.
+  The folder is required by `build.mjs`; a missing token, logo, or export fails the build.
+
 ### Removed
 
 - `brands/rtok`, `brands/ketch`, `brands/cox` and their outputs in `dist/brands/`. Each pack now lives
