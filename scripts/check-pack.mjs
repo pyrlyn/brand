@@ -17,6 +17,8 @@ export const IMPORT_PATHS = [
   "logo/pyrlyn/pyrlyn-lockup-on-dark.svg", "logo/pyrlyn/pyrlyn-mark-on-dark.svg", "logo/listepo/listepo-favicon.svg",
   // legacy base aliases (v0.2.0 paths)
   "fonts.css", "fonts/IBMPlexMono-Regular.woff2", "icons/ui/calls.svg",
+  "brands/mailune/tokens.css", "brands/mailune/tokens.json", "brands/mailune/tokens.resolved.json",
+  "brands/mailune/logo/mailune-favicon.svg",
 ];
 
 // `resolveFile` is Node's package resolver in CI and a stand-in in tests.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-label="mailune">
+  <svg x="0" y="0" width="64" height="64" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="14" fill="#1F1F1C"/>
+    <rect x="14" y="20" width="36" height="26" rx="3" fill="#F5F2ED"/>
+    <path d="M14 23.5 32 36.5 50 23.5" fill="none" stroke="#335C8C" stroke-width="2.25" stroke-linejoin="round"/>
+    <circle cx="32" cy="33" r="3.25" fill="#335C8C"/>
+  </svg>
+  <text x="76" y="42" fill="#1F1F1C" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="28" font-weight="600">mailune</text>
+</svg>

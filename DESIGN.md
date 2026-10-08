@@ -4,7 +4,7 @@
   components, icons. Shared by every brand.
 - Brandbooks (only their deltas) live with each product: [rtok](https://github.com/pyrlyn/rtok/blob/main/brand/DESIGN.md),
   [ketch](https://github.com/pyrlyn/ketch/blob/main/brand/DESIGN.md), [cox](https://github.com/pyrlyn/cox/blob/main/brand/DESIGN.md)
-  (`brand/` in each product repo).
+  (`brand/` in each product repo). [Mailune](brands/mailune/DESIGN.md) is built in this repo.
 - Landing web theme: [`themes/landing/`](themes/landing/) (see README).
 
 ## Pyrlyn logo

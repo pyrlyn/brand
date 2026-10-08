@@ -26,6 +26,7 @@ The product brandbooks moved out of this repo in v0.4.0. Each product keeps its 
 | rtok | [pyrlyn/rtok `brand/`](https://github.com/pyrlyn/rtok/tree/main/brand) | pyrlyn/rtok#739 | dark |
 | ketch | [pyrlyn/ketch `brand/`](https://github.com/pyrlyn/ketch/tree/main/brand) | pyrlyn/ketch#258 | light |
 | cox | [pyrlyn/cox `brand/`](https://github.com/pyrlyn/cox/tree/main/brand) | pyrlyn/cox#137 | light |
+| mailune | [`brands/mailune`](brands/mailune) in this repo | this tree | light |
 
 A pack inherits the base from here:
 
