@@ -13,22 +13,23 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ranAsScript } from "./scripts/cli.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const readJson = (rel) => JSON.parse(readFileSync(join(root, rel), "utf8"));
 const BASE = readJson("base/tokens.json");
 
 // ---------- helpers ----------
-const tokens = (group) =>
+export const tokens = (group) =>
   Object.entries(group).filter(([k, v]) => !k.startsWith("$") && v && typeof v === "object" && "$value" in v);
-const hexToRgb = (hex) => {
+export const hexToRgb = (hex) => {
   const h = hex.replace("#", "");
   return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
 };
-const rgbChannels = (hex) => hexToRgb(hex).join(" ");
-const bezier = (a) => `cubic-bezier(${a.join(", ")})`;
-const lineHeight = (t) => t.$extensions?.["com.listepo.lineHeight"];
-const family = (arr) => arr.map((f) => (/\s/.test(f) ? `"${f}"` : f)).join(", ");
+export const rgbChannels = (hex) => hexToRgb(hex).join(" ");
+export const bezier = (a) => `cubic-bezier(${a.join(", ")})`;
+export const lineHeight = (t) => t.$extensions?.["com.listepo.lineHeight"];
+export const family = (arr) => arr.map((f) => (/\s/.test(f) ? `"${f}"` : f)).join(", ");
 
 // ---------- fonts ----------
 const fontFiles = { regular: "Regular", semibold: "SemiBold", bold: "Bold" };
@@ -41,6 +42,7 @@ const fontFaces = (dir) => Object.entries(fontFiles)
 
 // ---------- base layer (dist/base/, --pyr-*) ----------
 const ROLES = BASE.$extensions["com.pyrlyn.roles"];
+export const isRole = (k) => ROLES.core.includes(k) || k in ROLES.optional;
 const baseStatic = () => {
   const l = [];
   l.push(`  --pyr-font-mono: ${family(BASE.font.family.mono.$value)};`);
@@ -83,7 +85,7 @@ ${fontFaces("../base/fonts/")}
 `;
 // Optional roles get their documented fallback wherever the components read them.
 const componentsSrc = readFileSync(join(root, "base/components/components.css"), "utf8");
-const withFallbacks = (css) =>
+export const withFallbacks = (css) =>
   css.replace(/var\(--pyr-([a-z0-9-]+?)(-rgb)?\)/g, (m, role, rgb) => {
     if (!(role in ROLES.optional)) return m;
     const fb = ROLES.optional[role];
@@ -127,6 +129,7 @@ const copies = [
 ];
 for (const [from, to] of copies) for (const f of files(from)) out[`${to}/${f}`] = readFileSync(join(root, from, f));
 
+if (ranAsScript(import.meta.url)) {
 const check = process.argv.includes("--check");
 let stale = 0;
 const same = (p, content) => existsSync(p) && Buffer.from(readFileSync(p)).equals(Buffer.from(content));
@@ -153,3 +156,4 @@ for (const [k, v] of Object.entries(pkg.exports)) {
 for (const [k, v] of Object.entries(pkg.bin ?? {})) if (!existsSync(join(root, v))) { console.error(`bin ${k} -> ${v}: missing`); stale++; }
 if (check) { if (stale) { console.error("run: node build.mjs"); process.exit(1); } console.log("dist/ is up to date"); }
 else if (stale) process.exit(1);
+}
