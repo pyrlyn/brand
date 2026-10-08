@@ -1,0 +1,7 @@
+- T1. Harden the pyrlyn-brand-copy CLI
+- T2. Stop shipping README.md into consumers' public folders
+- T3. Validate the optional `shine` role when a shadow references it
+- T4. Add a SHA256SUMS generator script
+- T5. Derive the brand list once
+- T6. Deduplicate token emission and shadow rendering in build.mjs
+- T7. Handle non-string export targets in the exports check
