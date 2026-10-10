@@ -9,8 +9,7 @@ Brand system for [github.com/pyrlyn](https://github.com/pyrlyn), as the npm pack
   plain-CSS components (`.pyr-*`).
 - `logo/pyrlyn/`: the Pyrlyn company logo, see [Pyrlyn logo](#pyrlyn-logo). `logo/listepo/`: the
   legacy listepo tools mark.
-- `themes/landing/`: the landing web theme used by
-  [pyrlyn.github.io/landing](https://pyrlyn.github.io/landing/), see [Landing web theme](#landing-web-theme).
+- `themes/landing/`: the landing web theme, see [Landing web theme](#landing-web-theme).
 
 Everything in `dist/` is generated or copied by `node build.mjs` (Node ≥ 18, no dependencies) and
 is committed, so a git install needs no build step. CI (`.github/workflows/ci.yml`) runs
@@ -108,7 +107,7 @@ prompt `>_` as a chevron and an amber cursor bar. Product logos stay primary; th
 
 ## Landing web theme
 
-`themes/landing/` is the visual identity of the landing (pyrlyn.github.io/landing). It is not a
+`themes/landing/` is the visual identity of the landing. It is not a
 product token set: the names are the landing's own (`--accent`, `--accent-2`, `--accent-light`, `--bg`,
 `--fg`, `--muted`, `--surface*`, `--glass-*`, `--hairline*`, `--blur-*`, `--shadow-*`, `--focus`,
 `--font-sans`, `--font-mono`, `--fs-*`, `--s-1`…`--s-10`, `--r-*`, `--container`, `--ease`). The

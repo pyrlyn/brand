@@ -1,4 +1,4 @@
-/* Landing web theme (pyrlyn.github.io/landing): the site palette, surfaces, type, space and radii.
+/* Landing web theme: the site palette, surfaces, type, space and radii.
  * Hand-authored; copied to dist/landing/tokens.css by build.mjs. These are NOT the rtok tokens (--rtok-*):
  * the names are the ones the landing uses. Page themes override --accent / --accent-2 / --accent-light / --bg on <html>. */
 :root {
