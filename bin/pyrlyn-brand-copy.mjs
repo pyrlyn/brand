@@ -11,8 +11,8 @@
 //   --favicon  also copy dist/logo/<set>/<file> to <dest>/favicon.svg (or .png, by the source extension)
 //
 // Example (package.json): "prebuild": "pyrlyn-brand-copy public pyrlyn --favicon listepo/listepo-favicon.svg"
-import { copyFileSync, mkdirSync, readdirSync, statSync, existsSync } from "node:fs";
-import { dirname, extname, join, resolve } from "node:path";
+import { copyFileSync, mkdirSync, readdirSync, statSync, existsSync, realpathSync } from "node:fs";
+import { dirname, extname, join, resolve, relative, isAbsolute, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ranAsScript } from "../scripts/cli.mjs";
 
@@ -47,6 +47,7 @@ export function unknownSetMessage(set, known) {
 // `<set>/<file>` as the CLI splits it. The file part is still joined onto the set directory by the caller.
 export function faviconParts(favicon) {
   const [set, ...rest] = favicon.split("/");
+  if (!set || rest.length === 0 || [set, ...rest].some((part) => !part || part === "." || part === ".." || /[\\:\0]/.test(part))) return null;
   return { set, file: rest.join("/") };
 }
 
@@ -59,6 +60,23 @@ if (ranAsScript(import.meta.url)) {
   const { dest, wanted, favicon } = parsed;
   const all = Object.keys(SETS);
   const sets = selectSets(wanted, all);
+  let faviconSource;
+  if (favicon) {
+    const parts = faviconParts(favicon);
+    if (!parts || !Object.hasOwn(SETS, parts.set)) {
+      console.error(`invalid favicon: ${favicon}`); process.exit(1);
+    }
+    try {
+      const base = realpathSync(SETS[parts.set]);
+      faviconSource = realpathSync(join(base, parts.file));
+      const rel = relative(base, faviconSource);
+      if (!rel || rel === ".." || rel.startsWith(`..${sep}`) || isAbsolute(rel) || !statSync(faviconSource).isFile()) {
+        console.error(`invalid favicon: ${favicon}`); process.exit(1);
+      }
+    } catch {
+      console.error(`no such logo file: ${favicon}`); process.exit(1);
+    }
+  }
   let n = 0;
   for (const set of sets) {
     const message = unknownSetMessage(set, all);
@@ -67,13 +85,11 @@ if (ranAsScript(import.meta.url)) {
     mkdirSync(to, { recursive: true });
     for (const f of readdirSync(SETS[set])) { copyFileSync(join(SETS[set], f), join(to, f)); n++; }
   }
-  if (favicon) {
-    const { set: fset, file } = faviconParts(favicon);
-    const src = SETS[fset] ? join(SETS[fset], file) : "";
-    if (!src || !existsSync(src)) { console.error(`no such logo file: ${favicon}`); process.exit(1); }
+  if (faviconSource) {
     mkdirSync(resolve(dest), { recursive: true });
-    copyFileSync(src, resolve(dest, `favicon${extname(src)}`));
+    copyFileSync(faviconSource, resolve(dest, `favicon${extname(faviconSource)}`));
     n++;
   }
+  if (n === 0) { console.error("no logo files to copy; rebuild or reinstall the package"); process.exit(1); }
   console.log(`pyrlyn-brand-copy: ${n} files -> ${dest}`);
 }

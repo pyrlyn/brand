@@ -13,3 +13,11 @@ Those files are in the repo root. `toolchain.md` lists Node and npm.
 `build.mjs`, `bin/pyrlyn-brand-copy.mjs`, and `scripts/check-pack.mjs` decide token merges, favicon arguments, and which import paths must be in the tarball, and nothing checked those decisions outside CI. Done means: `npm test` runs Node's built-in runner against the real modules, and the missing rulebook files are present.
 
 `node --test tests/*.test.mjs` passed 15 tests: token merge and resolve, color and font helpers, copy arguments, and pack gaps. A direct `node file.mjs` run still writes `dist/` and copies logos; importing the modules from a test does not.
+
+### T1. Harden the pyrlyn-brand-copy CLI
+
+`bin/pyrlyn-brand-copy.mjs:71-72`: `--favicon pyrlyn/../../../../etc/passwd` traverses out of the logo set and copies any readable file into `<dest>/favicon.<ext>` (relative traversal works; absolute paths are blocked). Same file: `--favicon pyrlyn/` (trailing slash) makes `copyFileSync` throw an uncaught `EISDIR`; and when `dist/` is missing the tool copies 0 files and still exits 0. Done means: `..`/empty segments are rejected (or the resolved source is required to stay under the set directory), the favicon source must be a regular file, and a zero-file copy exits non-zero with a clear message.
+
+Execution plan: add isolated CLI regression tests for traversal, invalid files and empty distributions; validate favicon sources before copying with Node standard-library path and file checks; run npm test, the build drift check, package checks and checksum verification. No new dependency is needed for these filesystem checks.
+
+Validation: 10 regression cases fail on the original CLI; all 23 tests pass after the fix. Favicon validation precedes destination writes, resolves symlinks and requires a regular file within its logo set. Empty distributions fail explicitly. Reused the existing argument parser and Node filesystem/path APIs; no applicable JavaScript helper exists in shared packages.
