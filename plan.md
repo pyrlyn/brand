@@ -6,17 +6,12 @@ Zero-dependency design-token package: `build.mjs` compiles the shared `base/` to
 
 | # | Status | Priority | Complexity | Readiness | Agent |
 | --- | --- | --- | --- | --- | --- |
-| T1 | todo | P1 | 2 | 0% | |
 | T2 | todo | P2 | 1 | 0% | |
 | T3 | todo | P2 | 2 | 0% | |
 | T4 | todo | P3 | 1 | 0% | |
 | T5 | todo | P3 | 2 | 0% | |
 | T6 | todo | P3 | 2 | 0% | |
 | T7 | todo | P3 | 1 | 0% | |
-
-### T1. Harden the pyrlyn-brand-copy CLI
-
-`bin/pyrlyn-brand-copy.mjs:71-72`: `--favicon pyrlyn/../../../../etc/passwd` traverses out of the logo set and copies any readable file into `<dest>/favicon.<ext>` (relative traversal works; absolute paths are blocked). Same file: `--favicon pyrlyn/` (trailing slash) makes `copyFileSync` throw an uncaught `EISDIR`; and when `dist/` is missing the tool copies 0 files and still exits 0. Done means: `..`/empty segments are rejected (or the resolved source is required to stay under the set directory), the favicon source must be a regular file, and a zero-file copy exits non-zero with a clear message.
 
 ### T2. Stop shipping README.md into consumers' public folders
 
