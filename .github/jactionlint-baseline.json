@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "file": ".github/workflows/ci.yml",
+      "rule": "concurrency-limits",
+      "fingerprint": "c41f0955d93b4ce5",
+      "context": "081b2e27040f94d3",
+      "occurrence": 0,
+      "message": "workflow has no \"concurrency:\", so every run of it executes at the same time even when a newer run supersedes the older ones. add a top-level \"concurrency:\" with a \"group:\" and \"cancel-in-progress: true\". use a group per pull request such as \"${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}\", so that a new push cancels only the older runs of the same pull request and not the runs of the others"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "rule": "missing-timeout",
+      "fingerprint": "9c11787ba90227ec",
+      "context": "c67d416bd2037202",
+      "occurrence": 0,
+      "message": "\"timeout-minutes\" is not set at this job. Set it to avoid wasting runner minutes when the job hangs"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "rule": "unpinned-uses",
+      "fingerprint": "08ce8572c30a1eae",
+      "context": "15bb5f18e129d9cc",
+      "occurrence": 0,
+      "message": "action \"actions/checkout@v4\" must be pinned to a full-length commit SHA like \"{owner}/{repo}@{sha}\" because the \"unpinned-uses\" rule is enabled"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "rule": "artipacked",
+      "fingerprint": "6576198e9e65790b",
+      "context": "710a40f7714f8153",
+      "occurrence": 0,
+      "message": "actions/checkout leaves the GITHUB_TOKEN in the git config of the workspace, where a later step such as an artifact upload can publish it. set \"persist-credentials: false\" under \"with:\" unless a later step needs to push"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "rule": "unpinned-uses",
+      "fingerprint": "0597f4a3bdeb0be9",
+      "context": "bc77fda0682c1f85",
+      "occurrence": 0,
+      "message": "action \"actions/setup-node@v4\" must be pinned to a full-length commit SHA like \"{owner}/{repo}@{sha}\" because the \"unpinned-uses\" rule is enabled"
+    }
+  ]
+}

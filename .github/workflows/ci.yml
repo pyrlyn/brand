@@ -27,3 +27,17 @@ jobs:
         run: |
           npm pack --dry-run --json > "$RUNNER_TEMP/pack.json"
           node scripts/check-pack.mjs "$RUNNER_TEMP/pack.json"
+
+  # jactionlint (https://github.com/jdx/jactionlint) with .github/jactionlint.yaml (default
+  # profile, `baseline: auto`). shellcheck comes from the runner image.
+  jactionlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@9149ea85001c7435d5a66bb127d6a1b6227cb0a5 # v5.0.0
+        with:
+          install_args: github:jdx/jactionlint@2.0.2
+      - run: jactionlint --color
