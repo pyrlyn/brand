@@ -11,6 +11,7 @@
   "files": [
     "dist",
     "bin",
+    "scripts/cli.mjs",
     "base",
     "logo",
     "brands/mailune/tokens.json",
