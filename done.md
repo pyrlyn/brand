@@ -21,3 +21,11 @@ Those files are in the repo root. `toolchain.md` lists Node and npm.
 Execution plan: add isolated CLI regression tests for traversal, invalid files and empty distributions; validate favicon sources before copying with Node standard-library path and file checks; run npm test, the build drift check, package checks and checksum verification. No new dependency is needed for these filesystem checks.
 
 Validation: 10 regression cases fail on the original CLI; all 23 tests pass after the fix. Favicon validation precedes destination writes, resolves symlinks and requires a regular file within its logo set. Empty distributions fail explicitly. Reused the existing argument parser and Node filesystem/path APIs; no applicable JavaScript helper exists in shared packages.
+
+### T8. Include the copy CLI runtime helper in the package
+
+The installed copy CLI must run using only files shipped by npm. Its shared entry-point helper is currently outside the package allowlist.
+
+Execution plan: reproduce the failure in a temporary package fixture built from npm pack output; include the existing helper in package.json; run the regression test, full npm tests, build drift check, and package checks. Reuse scripts/cli.mjs; no new dependency or duplicated implementation is needed.
+
+Implemented: package the existing scripts/cli.mjs helper and resolve the entry point through realpath so npm-style symlink launches execute. The packed-file regression failed with ERR_MODULE_NOT_FOUND before the package fix, then exposed the symlink no-op before the helper fix. Validation: npm test (24 passed), node build.mjs --check, and scripts/check-pack.mjs (20 packed import paths). No dependency changes.
