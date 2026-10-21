@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
       # Regenerates dist/ in memory and fails if the committed dist/ differs, a file in dist/ is
       # no longer produced, or an "exports"/"bin" target in package.json is missing.
       - name: dist/ is up to date
