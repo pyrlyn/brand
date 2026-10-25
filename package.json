@@ -1,6 +1,6 @@
 {
   "name": "@pyrlyn/brand",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Pyrlyn brand system: the shared base layer (tokens, fonts, icons, components) that the product brand packs extend, plus the Pyrlyn logo and the landing web theme.",
   "private": true,
   "license": "SEE LICENSE IN README.md",

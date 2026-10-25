@@ -1,17 +1,17 @@
 # Changelog
 
-## v0.4.0 (unreleased)
+## v0.5.0 (2026-10-25)
 
-The product brand packs moved to their product repos; this repo keeps the shared base layer, the
-Pyrlyn logo and the landing theme. The values in `base/` are unchanged (same tokens, roles, fallbacks,
-fonts, icons and components), so `dist/base/*` resolves exactly as in v0.3.0. Only descriptions and
-comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/DESIGN.md`,
-`base/components/components.css` and the generated CSS headers).
+Changes since the `v0.4.0` tag. Consumers upgrading from v0.2.0: `@pyrlyn/brand/tokens.css` (the old rtok pack) is no longer
+exported since the product packs moved out in v0.4.0; the landing imports `landing/tokens.css` and
+`landing/components.css` only.
 
 ### Added
 
 - Pyrlyn logo: `pyrlyn-favicon-16.png`, static `pyrlyn-mark-on-{dark,light}-{32..512}.png`, blinking
   `pyrlyn-mark-blink-on-{dark,light}.{svg,gif,png}`, generator `logo/pyrlyn/_build/gen-mark-assets.mjs`.
+- `brands/mailune`: Mailune tokens, logos, package exports, and `dist/brands/mailune/`.
+  The folder is required by `build.mjs`; a missing token, logo, or export fails the build.
 
 ### Changed
 
@@ -22,8 +22,13 @@ comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/D
   Consumers that string-replace `#F2B33D` in the SVGs must match `#4C8DFF` instead.
 - `logo/listepo/listepo-favicon.svg` is now the Pyrlyn adaptive favicon (was the gradient listepo mark).
 
-- `brands/mailune`: Mailune tokens, logos, package exports, and `dist/brands/mailune/`.
-  The folder is required by `build.mjs`; a missing token, logo, or export fails the build.
+## v0.4.0 (2026-10-05)
+
+The product brand packs moved to their product repos; this repo keeps the shared base layer, the
+Pyrlyn logo and the landing theme. The values in `base/` are unchanged (same tokens, roles, fallbacks,
+fonts, icons and components), so `dist/base/*` resolves exactly as in v0.3.0. Only descriptions and
+comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/DESIGN.md`,
+`base/components/components.css` and the generated CSS headers).
 
 ### Removed
 
