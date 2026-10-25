@@ -29,7 +29,7 @@ The product brandbooks moved out of this repo in v0.4.0. Each product keeps its 
 
 A pack inherits the base from here:
 
-- its `brand/package.json` pins this package, e.g. `"@pyrlyn/brand": "github:pyrlyn/brand#v0.4.0"`;
+- its `brand/package.json` pins this package, e.g. `"@pyrlyn/brand": "github:pyrlyn/brand#v0.5.0"`;
 - its `tokens.json` sets `"$extends": "@pyrlyn/brand/base/tokens.json"` and fills the colour roles
   per theme, plus the product's own `--<brand>-*` tokens;
 - its `build.mjs` writes `brand/dist/tokens.css`, which starts with
@@ -127,7 +127,7 @@ layout CSS. Fonts are the consumer's: the theme names Inter (the landing self-ho
 ## Reuse in another site
 
 ```sh
-npm install github:pyrlyn/brand#v0.4.0
+npm install github:pyrlyn/brand#v0.5.0
 ```
 
 ```css
