@@ -8,7 +8,7 @@ Brand system for [github.com/pyrlyn](https://github.com/pyrlyn), as the npm pack
   blur, and the list of semantic colour roles with their fallbacks), IBM Plex Mono, UI icons and the
   plain-CSS components (`.pyr-*`).
 - `logo/pyrlyn/`: the Pyrlyn company logo, see [Pyrlyn logo](#pyrlyn-logo). `logo/listepo/`: the
-  legacy listepo tools mark.
+  legacy listepo path; `listepo-favicon.svg` is now a copy of the Pyrlyn adaptive favicon.
 - `themes/landing/`: the landing web theme, see [Landing web theme](#landing-web-theme).
 
 Everything in `dist/` is generated or copied by `node build.mjs` (Node ≥ 18, no dependencies) and
@@ -85,7 +85,7 @@ see [CHANGELOG.md](CHANGELOG.md) for where each one went.
 ## Pyrlyn logo
 
 The parent brand of [github.com/pyrlyn](https://github.com/pyrlyn). Concept "Prompt": the shell
-prompt `>_` as a chevron and an amber cursor bar. Product logos stay primary; the Pyrlyn logo is for
+prompt `>_` as a chevron and a blue cursor bar. Product logos stay primary; the Pyrlyn logo is for
 "by Pyrlyn" credits and org-level use. Files live in `logo/pyrlyn/` (details in
 [`logo/pyrlyn/README.md`](logo/pyrlyn/README.md)) and are exported as
 `@pyrlyn/brand/logo/pyrlyn/<file>`:
@@ -100,8 +100,8 @@ prompt `>_` as a chevron and an amber cursor bar. Product logos stay primary; th
 | `pyrlyn-apple-touch-icon.png` | 180×180 apple-touch icon |
 | `pyrlyn-github-avatar-1000.png` | GitHub org avatar |
 
-- Colours: ink `#0C0E11`, paper `#F4F2ED`, amber `#F2B33D` on dark and `#B97C06` on light. The amber
-  cursor is the only accent.
+- Colours: ink `#0C0E11`, paper `#F4F2ED`, cursor blue `#4C8DFF` on dark and `#2F6BDB` on light (the landing
+  `--accent` / `--accent-light`). The cursor is the only accent.
 - Wordmark: JetBrains Mono 600, outlined to paths (no font needed). Lockup viewBox ratio 109:26.
 - Rules: [DESIGN.md](DESIGN.md#pyrlyn-logo).
 
