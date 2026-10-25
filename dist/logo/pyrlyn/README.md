@@ -15,9 +15,13 @@ org-level use.
 | `pyrlyn-lockup-on-light.svg` / `-2000.png` | Mark + `pyrlyn` wordmark, for light backgrounds |
 | `pyrlyn-lockup-on-dark.svg` / `-2000.png` | Mark + `pyrlyn` wordmark, for dark backgrounds |
 | `pyrlyn-lockup-mono.svg` | Lockup in `currentColor` (one path) |
-| `pyrlyn-favicon.svg` | Favicon; switches ink/paper with `prefers-color-scheme` |
-| `pyrlyn-favicon-32.png` / `-64.png` | PNG favicons: paper mark on an ink rounded tile |
-| `pyrlyn-apple-touch-icon.png` | 180×180 opaque ink square (iOS adds the rounding) |
+| `pyrlyn-favicon.svg` | Favicon, heavier 16 px geometry; follows the **browser** `prefers-color-scheme`: ink chevron + `#2F6BDB` cursor on light UI, paper chevron + `#4C8DFF` on dark UI |
+| `pyrlyn-favicon-16.png` / `-32.png` / `-64.png` | PNG fallbacks (can't follow the scheme): light-UI version, ink chevron + `#2F6BDB`, transparent |
+| `pyrlyn-apple-touch-icon.png` | 180×180 opaque ink square, paper chevron + `#4C8DFF` (iOS adds the rounding) |
+| `pyrlyn-mark-on-dark-{32,64,128,256,512}.png` | Static mark on solid ink, paper chevron + `#4C8DFF`; 32/64 use the heavier geometry |
+| `pyrlyn-mark-on-light-{32,64,128,256,512}.png` | Static mark on solid paper, ink chevron + `#2F6BDB`; 32/64 heavier |
+| `pyrlyn-mark-blink-on-dark.svg` / `-on-light.svg` | Mark with the cursor blinking (CSS, 1.06 s, `steps(1)`, as the landing `cursor-blink`); solid under `prefers-reduced-motion` |
+| `pyrlyn-mark-blink-on-dark.gif` / `.png` (APNG), same `-on-light` | 512 px looping blink on solid ink / paper |
 
 Mark and lockup PNGs are RGBA with a transparent background: marks 1000×1000, lockups 2000 px
 wide. The wordmark is outlined to paths, so no font is needed.
@@ -30,11 +34,14 @@ wide. The wordmark is outlined to paths, so no font is needed.
 | Paper | `#F4F2ED` | Mark and wordmark on dark backgrounds; light background |
 | Amber (on dark) | `#F2B33D` | Cursor bar on dark backgrounds |
 | Amber (on light) | `#B97C06` | Cursor bar on light backgrounds |
+| Accent (dark) | `#4C8DFF` | Cursor in favicon, blink and sized PNGs on dark (`themes/landing` `--accent`) |
+| Accent (light) | `#2F6BDB` | Same on light (`themes/landing` `--accent-light`) |
 
 ## Usage
 
-- The amber cursor is the only accent. Do not recolour the chevron or animate the cursor in the
-  logo itself.
+- The cursor is the only accent: amber in the original mark/lockup files, the landing blue in the
+  favicon, blink and sized PNGs. Do not recolour the chevron. Animate the cursor only via the
+  `-blink` files.
 - Clear space: at least the cursor height (4 grid units, 1/8 of the mark box) on every side; the
   lockup SVGs already include 2 units.
 - Minimum size: mark 16 px; lockup 16 px high.
@@ -52,5 +59,6 @@ reads as the underscore and the chevron centre matches the x-height centre. Word
 Mono (OFL) weight 600, hand-kerned for even gaps (font units, 1000 upm): py −21, yr −35, rl +12,
 ly −5, yn −22. Cursor-to-wordmark gap: 7 units.
 
-Regenerate with `python3 _build/build.py [OUT_DIR]` (needs `fonttools`, `cairosvg`; point
+Favicon, blink and sized PNGs: `node _build/gen-mark-assets.mjs` (needs `sharp`, `ffmpeg`).
+The rest: regenerate with `python3 _build/build.py [OUT_DIR]` (needs `fonttools`, `cairosvg`; point
 `JBMONO_VF` at `JetBrainsMono-VariableFont_wght.ttf`).

@@ -10,6 +10,14 @@ comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/D
 
 ### Added
 
+- Pyrlyn logo: `pyrlyn-favicon-16.png`, static `pyrlyn-mark-on-{dark,light}-{32..512}.png`, blinking
+  `pyrlyn-mark-blink-on-{dark,light}.{svg,gif,png}`, generator `logo/pyrlyn/_build/gen-mark-assets.mjs`.
+
+### Changed
+
+- Pyrlyn favicon: heavier geometry for 16 px; the cursor is the landing accent (`#2F6BDB` light UI,
+  `#4C8DFF` dark UI) instead of amber; PNG fallbacks are now the light-UI version on transparent.
+
 - `brands/mailune`: Mailune tokens, logos, package exports, and `dist/brands/mailune/`.
   The folder is required by `build.mjs`; a missing token, logo, or export fails the build.
 
