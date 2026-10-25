@@ -1,11 +1,14 @@
 // Generates the colour-scheme favicon, its PNG fallbacks, the blinking mark (SVG/GIF/APNG) and static mark PNGs.
-// Run from logo/pyrlyn: node _build/gen-mark-assets.mjs  (needs `sharp` resolvable and `ffmpeg` on PATH).
+// Run from logo/pyrlyn: node _build/gen-mark-assets.mjs  (needs `sharp` resolvable and `ffmpeg` in a standard location or FFMPEG=/abs/path).
 import { createRequire } from "node:module";
 const sharp = createRequire(process.env.SHARP_FROM ?? import.meta.url)("sharp"); // SHARP_FROM=/path/to/node_modules/x.js if not installed here
-import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { writeFileSync, mkdtempSync, rmSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, isAbsolute } from "node:path";
+// Resolve ffmpeg to an absolute path instead of trusting PATH: FFMPEG=/abs/path overrides.
+const FFMPEG = [process.env.FFMPEG, "/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg"].find((p) => p && isAbsolute(p) && existsSync(p));
+if (!FFMPEG) throw new Error("ffmpeg not found; set FFMPEG=/absolute/path/to/ffmpeg");
 
 const INK = "#0C0E11", PAPER = "#F4F2ED";
 // Cursor = landing accent (themes/landing/tokens.css): --accent (dark) / --accent-light (light).
@@ -32,7 +35,7 @@ for (const [name, [fg, acc, bg]] of Object.entries(themes)) {
   await png(flat(REG, fg, acc, bg), 512, join(t, "f0.png"));
   await png(flat(REG, fg, null, bg), 512, join(t, "f1.png"));
   writeFileSync(join(t, "list.txt"), "file 'f0.png'\nduration 0.53\nfile 'f1.png'\nduration 0.53\nfile 'f1.png'\n");
-  const ff = (...a) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-f", "concat", "-i", join(t, "list.txt"), ...a]);
+  const ff = (...a) => execFileSync(FFMPEG, ["-y", "-loglevel", "error", "-f", "concat", "-i", join(t, "list.txt"), ...a]);
   ff("-vf", "split[a][b];[a]palettegen=max_colors=8[p];[b][p]paletteuse", "-loop", "0", `pyrlyn-mark-blink-${name}.gif`);
   ff("-plays", "0", "-f", "apng", `pyrlyn-mark-blink-${name}.png`);
   rmSync(t, { recursive: true });
