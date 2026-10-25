@@ -6,7 +6,7 @@
 //   pyrlyn-brand-copy <dest> [set ...] [--favicon <set>/<file>]
 //
 //   <dest>     target folder; each set lands in <dest>/<set>/ (created if missing)
-//   set        logo sets: pyrlyn, listepo (dist/logo/<set>/) and the brands rtok, ketch, cox
+//   set        logo sets: pyrlyn, listepo (dist/logo/<set>/) and the brands the token CLI, the package manager, the coding agent
 //              (dist/brands/<brand>/logo/); default: all
 //   --favicon  also copy dist/logo/<set>/<file> to <dest>/favicon.svg (or .png, by the source extension)
 //

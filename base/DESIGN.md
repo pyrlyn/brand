@@ -4,10 +4,10 @@ The shared layer every Pyrlyn brand builds on: type, shape, space, depth, motion
 icons. Values live in [`tokens.json`](tokens.json) (built to `dist/base/tokens.css` as `--pyr-*`);
 the shared components are in [`components/`](components/). Brand-specific colour and logo rules
 are in each product's brandbook (`brand/DESIGN.md` in the product repo):
-[rtok](https://github.com/pyrlyn/rtok/blob/main/brand/DESIGN.md), [ketch](https://github.com/pyrlyn/ketch/blob/main/brand/DESIGN.md),
-[cox](https://github.com/pyrlyn/cox/blob/main/brand/DESIGN.md). The Pyrlyn company logo: [../DESIGN.md](../DESIGN.md#pyrlyn-logo).
+the token CLI, the package manager,
+the coding agent. The Pyrlyn company logo: [../DESIGN.md](../DESIGN.md#pyrlyn-logo).
 
-The values come from the rtok system (the most complete one; see `brand/sources/` and `brand/PROVENANCE.md` in pyrlyn/rtok).
+The values come from the token CLI system (the most complete one; see `brand/sources/` and `brand/PROVENANCE.md` in pyrlyn/rtok).
 
 ## Semantic colour roles
 
@@ -63,4 +63,4 @@ in its pack's `brand/dist/tokens.css`, so the base components work with any bran
 
 - `icons/ui/`: 24×24, stroke 1.75, round caps, `currentColor`.
 - Icons inherit text colour: `fg-muted` by default, `accent` (or `accent-fg` on light) when active.
-- Brand-specific icon sets live in the product's pack (rtok: `brand/icons/feature/`, `brand/icons/ui/`).
+- Brand-specific icon sets live in the product's pack (the token CLI: `brand/icons/feature/`, `brand/icons/ui/`).

@@ -8,7 +8,7 @@
 //   dist/fonts.css                                                          legacy alias of the base fonts (paths relative to dist/)
 //   dist/landing/*.css, dist/logo/{pyrlyn,listepo}/                         copied byte for byte
 //
-// The product brand packs (rtok, ketch, cox) are not built here any more: each product repo has a
+// The product brand packs (the token CLI, the package manager, the coding agent) are not built here any more: each product repo has a
 // brand/ folder that extends @pyrlyn/brand/base/tokens.json and builds its own dist/ (see README).
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
