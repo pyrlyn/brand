@@ -22,9 +22,9 @@ The product brandbooks moved out of this repo in v0.4.0. Each product keeps its 
 
 | Product | Pack | Added in | Default theme |
 |---|---|---|---|
-| rtok | [pyrlyn/rtok `brand/`](https://github.com/pyrlyn/rtok/tree/main/brand) | pyrlyn/rtok#739 | dark |
-| ketch | [pyrlyn/ketch `brand/`](https://github.com/pyrlyn/ketch/tree/main/brand) | pyrlyn/ketch#258 | light |
-| cox | [pyrlyn/cox `brand/`](https://github.com/pyrlyn/cox/tree/main/brand) | pyrlyn/cox#137 | light |
+| the token CLI | [pyrlyn/rtok `brand/`](https://github.com/pyrlyn) | pyrlyn/rtok#739 | dark |
+| the package manager | [pyrlyn/ketch `brand/`](https://github.com/pyrlyn) | pyrlyn/ketch#258 | light |
+| the coding agent | [pyrlyn/cox `brand/`](https://github.com/pyrlyn) | pyrlyn/cox#137 | light |
 | mailune | [`brands/mailune`](brands/mailune) in this repo | this tree | light |
 
 A pack inherits the base from here:
@@ -78,8 +78,8 @@ and then, if wanted, the base fonts and components:
 @import "@pyrlyn/brand/base/components.css";  /* .pyr-btn, .pyr-chip, … in the product's colours */
 ```
 
-The v0.3.0 `brands/*` paths and the legacy rtok flat build (`tokens.css`, `components.css`,
-`tailwind-v4.css`, `tokens.json`, `tokens.resolved.json`, `logo/rtok/*`, `icons/feature/*`) are gone;
+The v0.3.0 `brands/*` paths and the legacy the token CLI flat build (`tokens.css`, `components.css`,
+`tailwind-v4.css`, `tokens.json`, `tokens.resolved.json`, `logo/tokcli/*`, `icons/feature/*`) are gone;
 see [CHANGELOG.md](CHANGELOG.md) for where each one went.
 
 ## Pyrlyn logo
@@ -159,7 +159,7 @@ postinstall hook) and git-ignore the output:
 ```
 
 `pyrlyn-brand-copy <dest> [set ...] [--favicon <set>/<file>]`: sets are `pyrlyn` and `listepo`
-(default: both); `--favicon` also writes `<dest>/favicon.svg`. Product logos (rtok, ketch, cox) are no
+(default: both); `--favicon` also writes `<dest>/favicon.svg`. Product logos (the token CLI, the package manager, the coding agent) are no
 longer sets here; they live in each product's `brand/logo/`.
 
 To update: tag a new version here (`git tag vX.Y.Z && git push origin vX.Y.Z`), then in the site run
