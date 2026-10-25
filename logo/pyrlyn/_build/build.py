@@ -8,7 +8,8 @@ from fontTools.pens.transformPen import TransformPen
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 os.makedirs(OUT, exist_ok=True)
 INK, PAPER = "#0C0E11", "#F4F2ED"
-AMBER_ON_DARK, AMBER_ON_LIGHT = "#F2B33D", "#B97C06"
+# cursor = landing accent (themes/landing/tokens.css --accent / --accent-light)
+ACCENT_ON_DARK, ACCENT_ON_LIGHT = "#4C8DFF", "#2F6BDB"
 # --- mark: chevron with flat ends (horizontal thickness 6, 45 deg arms), cursor 10x4 on the baseline row
 CHEV = "M4 6H10L20 16L10 26H4L14 16Z"
 CUR = (18, 22, 10, 4)
@@ -56,7 +57,7 @@ def lockup(fg, acc):
     return svg(f"-2 4 {W+4} 26", (W+4)*4, 104, body), W
 def png(s_, path, w, h):
     cairosvg.svg2png(bytestring=s_.encode(), write_to=path, output_width=w, output_height=h)
-for name, fg, acc in (("on-dark", PAPER, AMBER_ON_DARK), ("on-light", INK, AMBER_ON_LIGHT), ("mono", "currentColor", "currentColor")):
+for name, fg, acc in (("on-dark", PAPER, ACCENT_ON_DARK), ("on-light", INK, ACCENT_ON_LIGHT), ("mono", "currentColor", "currentColor")):
     m = svg("0 0 32 32", 32, 32, mark_body(fg, acc))
     l, W = lockup(fg, acc)
     open(f"{OUT}/pyrlyn-mark-{name}.svg", "w").write(m)
@@ -64,19 +65,10 @@ for name, fg, acc in (("on-dark", PAPER, AMBER_ON_DARK), ("on-light", INK, AMBER
     if name != "mono":
         png(m, f"{OUT}/pyrlyn-mark-{name}-1000.png", 1000, 1000)
         png(l, f"{OUT}/pyrlyn-lockup-{name}-2000.png", 2000, round(2000 * 26 / (W + 4)))
-# favicons: adaptive SVG; PNGs on an ink rounded tile; apple-touch + GitHub avatar opaque ink squares
-fav = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
-       f'<style>path{{fill:{INK}}}.c{{fill:{AMBER_ON_LIGHT}}}'
-       f'@media (prefers-color-scheme:dark){{path{{fill:{PAPER}}}.c{{fill:{AMBER_ON_DARK}}}}}</style>'
-       f'<path d="{CHEV}"/><path class="c" d="{cur_d()}"/></svg>\n')
-open(f"{OUT}/pyrlyn-favicon.svg", "w").write(fav)
-tile = svg("0 0 32 32", 32, 32, f'<rect width="32" height="32" rx="6" fill="{INK}"/>' + mark_body(PAPER, AMBER_ON_DARK))
-for px in (32, 64):
-    png(tile, f"{OUT}/pyrlyn-favicon-{px}.png", px, px)
+# favicon SVG/PNGs and apple-touch icon: see gen-mark-assets.mjs. GitHub avatar: opaque ink square
 def square(scale):  # opaque ink square, mark scaled about the centre (16,16)
     t = 16 * (1 - scale)
     return svg("0 0 32 32", 32, 32, f'<rect width="32" height="32" fill="{INK}"/>'
-               f'<g transform="translate({t:g} {t:g}) scale({scale:g})">{mark_body(PAPER, AMBER_ON_DARK)}</g>')
-png(square(0.75), f"{OUT}/pyrlyn-apple-touch-icon.png", 180, 180)
+               f'<g transform="translate({t:g} {t:g}) scale({scale:g})">{mark_body(PAPER, ACCENT_ON_DARK)}</g>')
 png(square(0.625), f"{OUT}/pyrlyn-github-avatar-1000.png", 1000, 1000)
 print("lockup W", W)

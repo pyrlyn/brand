@@ -1,7 +1,7 @@
 # Pyrlyn logo
 
 Parent brand of [github.com/pyrlyn](https://github.com/pyrlyn). Concept "Prompt": the shell prompt
-`>_` reduced to a chevron and an amber cursor bar. Pyrlyn's tools are CLIs, so the parent mark is
+`>_` reduced to a chevron and a blue cursor bar. Pyrlyn's tools are CLIs, so the parent mark is
 the place they all run. Product logos stay primary; this one is for "by Pyrlyn" credits and
 org-level use.
 
@@ -9,14 +9,15 @@ org-level use.
 
 | File | Use |
 |---|---|
-| `pyrlyn-mark-on-light.svg` / `-1000.png` | Mark, ink chevron + amber cursor, for light backgrounds |
-| `pyrlyn-mark-on-dark.svg` / `-1000.png` | Mark, paper chevron + amber cursor, for dark backgrounds |
+| `pyrlyn-mark-on-light.svg` / `-1000.png` | Mark, ink chevron + `#2F6BDB` cursor, for light backgrounds |
+| `pyrlyn-mark-on-dark.svg` / `-1000.png` | Mark, paper chevron + `#4C8DFF` cursor, for dark backgrounds |
 | `pyrlyn-mark-mono.svg` | Mark in `currentColor` (one path): inline SVG, masks, one-colour print |
 | `pyrlyn-lockup-on-light.svg` / `-2000.png` | Mark + `pyrlyn` wordmark, for light backgrounds |
 | `pyrlyn-lockup-on-dark.svg` / `-2000.png` | Mark + `pyrlyn` wordmark, for dark backgrounds |
 | `pyrlyn-lockup-mono.svg` | Lockup in `currentColor` (one path) |
 | `pyrlyn-favicon.svg` | Favicon, heavier 16 px geometry; follows the **browser** `prefers-color-scheme`: ink chevron + `#2F6BDB` cursor on light UI, paper chevron + `#4C8DFF` on dark UI |
 | `pyrlyn-favicon-16.png` / `-32.png` / `-64.png` | PNG fallbacks (can't follow the scheme): light-UI version, ink chevron + `#2F6BDB`, transparent |
+| `pyrlyn-github-avatar-1000.png` | GitHub org avatar: opaque ink square, mark at 62.5% |
 | `pyrlyn-apple-touch-icon.png` | 180×180 opaque ink square, paper chevron + `#4C8DFF` (iOS adds the rounding) |
 | `pyrlyn-mark-on-dark-{32,64,128,256,512}.png` | Static mark on solid ink, paper chevron + `#4C8DFF`; 32/64 use the heavier geometry |
 | `pyrlyn-mark-on-light-{32,64,128,256,512}.png` | Static mark on solid paper, ink chevron + `#2F6BDB`; 32/64 heavier |
@@ -32,15 +33,12 @@ wide. The wordmark is outlined to paths, so no font is needed.
 |---|---|---|
 | Ink | `#0C0E11` | Mark and wordmark on light backgrounds; dark background |
 | Paper | `#F4F2ED` | Mark and wordmark on dark backgrounds; light background |
-| Amber (on dark) | `#F2B33D` | Cursor bar on dark backgrounds |
-| Amber (on light) | `#B97C06` | Cursor bar on light backgrounds |
-| Accent (dark) | `#4C8DFF` | Cursor in favicon, blink and sized PNGs on dark (`themes/landing` `--accent`) |
-| Accent (light) | `#2F6BDB` | Same on light (`themes/landing` `--accent-light`) |
+| Accent (on dark) | `#4C8DFF` | Cursor bar on dark backgrounds (`themes/landing` `--accent`) |
+| Accent (on light) | `#2F6BDB` | Cursor bar on light backgrounds (`themes/landing` `--accent-light`) |
 
 ## Usage
 
-- The cursor is the only accent: amber in the original mark/lockup files, the landing blue in the
-  favicon, blink and sized PNGs. Do not recolour the chevron. Animate the cursor only via the
+- The cursor is the only accent: the landing blue in every file (amber until v0.4.0). Do not recolour the chevron. Animate the cursor only via the
   `-blink` files.
 - Clear space: at least the cursor height (4 grid units, 1/8 of the mark box) on every side; the
   lockup SVGs already include 2 units.
