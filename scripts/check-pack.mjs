@@ -9,7 +9,7 @@ import { ranAsScript } from "./cli.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 export const IMPORT_PATHS = [
-  // base layer: what the product brand packs (rtok, ketch, cox brand/) import
+  // base layer: what the product brand packs (the token CLI, the package manager, the coding agent brand/) import
   "base/tokens.css", "base/fonts.css", "base/components.css", "base/tokens.json", "base/tokens.resolved.json",
   "base/fonts/IBMPlexMono-Regular.woff2", "base/icons/ui/calls.svg", "package.json",
   // used by the landing

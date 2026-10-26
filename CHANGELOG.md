@@ -36,12 +36,12 @@ comments that pointed at `brands/` were reworded (in `base/tokens.json`, `base/D
   in its product repo as `brand/` (pyrlyn/rtok#739, pyrlyn/ketch#258, pyrlyn/cox#137), extends
   `@pyrlyn/brand/base/tokens.json` and builds its own `brand/dist/tokens.css`.
 - Exports `brands/*/tokens.css`, `brands/*/tokens.json`, `brands/*/tokens.resolved.json`,
-  `brands/<brand>/logo/*`, `brands/rtok/icons/*`: use the product's `brand/dist/` and `brand/logo/`.
-- The legacy rtok flat build and its aliases: `tokens.css`, `components.css`, `tailwind-v4.css`,
-  `tokens.json`, `tokens.resolved.json`, `logo/rtok/*`, `icons/feature/*`. rtok builds the same files
-  in `brand/dist/legacy/` (byte-identical values; `tokens.css` there equals rtok's
+  `brands/<brand>/logo/*`, `brands/tokcli/icons/*`: use the product's `brand/dist/` and `brand/logo/`.
+- The legacy the token CLI flat build and its aliases: `tokens.css`, `components.css`, `tailwind-v4.css`,
+  `tokens.json`, `tokens.resolved.json`, `logo/tokcli/*`, `icons/feature/*`. The token CLI builds the same files
+  in `brand/dist/legacy/` (byte-identical values; `tokens.css` there equals the token CLI's
   `web/src/styles/tokens.css`), and its feature icons are in `brand/icons/feature/`.
-- `pyrlyn-brand-copy` sets `rtok`, `ketch`, `cox`; the sets are now `pyrlyn` and `listepo`.
+- `pyrlyn-brand-copy` sets the token CLI, the package manager, the coding agent; the sets are now `pyrlyn` and `listepo`.
 
 ### Kept
 
