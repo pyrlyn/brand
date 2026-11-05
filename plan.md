@@ -2,7 +2,7 @@
 
 <https://github.com/pyrlyn/brand>
 
-Zero-dependency design-token package: `build.mjs` compiles the shared `base/` token layer plus `brands/{rtok,ketch,cox}` brandbooks into `dist/` CSS/JSON, ships fonts/logos/icons, and provides the `pyrlyn-brand-copy` CLI; integrity pinned by a CI-verified `SHA256SUMS`.
+Zero-dependency design-token package: `build.mjs` compiles the shared `base/` token layer plus `brands/{the token CLI,the package manager,the coding agent}` brandbooks into `dist/` CSS/JSON, ships fonts/logos/icons, and provides the `pyrlyn-brand-copy` CLI; integrity pinned by a CI-verified `SHA256SUMS`.
 
 | # | Status | Priority | Complexity | Readiness | Agent |
 | --- | --- | --- | --- | --- | --- |
@@ -19,7 +19,7 @@ Zero-dependency design-token package: `build.mjs` compiles the shared `base/` to
 
 ### T3. Validate the optional `shine` role when a shadow references it
 
-`shine` is an optional role in `base/tokens.json`, but `build.mjs:312` (and the legacy path at `build.mjs:69-70`) reads `theme.shine.$value` without checking presence whenever a brand's shadow colors reference `{theme.*.shine}` (rtok does). A brand that omits it gets an opaque `TypeError` instead of a build error. Done means: the build fails with a named error when a shadow references `shine` and the theme does not define it.
+`shine` is an optional role in `base/tokens.json`, but `build.mjs:312` (and the legacy path at `build.mjs:69-70`) reads `theme.shine.$value` without checking presence whenever a brand's shadow colors reference `{theme.*.shine}` (the token CLI does). A brand that omits it gets an opaque `TypeError` instead of a build error. Done means: the build fails with a named error when a shadow references `shine` and the theme does not define it.
 
 ### T4. Add a SHA256SUMS generator script
 
