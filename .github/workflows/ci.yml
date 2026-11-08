@@ -18,7 +18,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
       # Regenerates dist/ in memory and fails if the committed dist/ differs, a file in dist/ is
       # no longer produced, or an "exports"/"bin" target in package.json is missing.
       - name: dist/ is up to date
