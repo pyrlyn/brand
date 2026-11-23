@@ -1,4 +1,4 @@
-# Pyrlyn brand
+<h1><picture><source media="(prefers-color-scheme: dark)" srcset="logo/pyrlyn/pyrlyn-mark-on-dark.svg"><img src="logo/pyrlyn/pyrlyn-mark-on-light.svg" width="32" height="32" alt="" align="absmiddle"></picture> Pyrlyn brand</h1>
 
 Brand system for [github.com/pyrlyn](https://github.com/pyrlyn), as the npm package `@pyrlyn/brand`
 (installed from git). It holds the shared **base layer** that every product brand extends, the
